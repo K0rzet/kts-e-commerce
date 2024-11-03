@@ -1,0 +1,55 @@
+@use '../../styles/variables.scss' as *;
+
+.button {
+  box-sizing: border-box;
+  display: inline-flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  padding: $space-l $space-l;
+  gap: $space-xxs;
+  background: $button-primary-bg;
+  min-height: 52px;
+
+  border: none;
+  border-radius: 0;
+
+  cursor: pointer;
+  width: auto;
+  white-space: nowrap;
+
+  &:not(.loading) {
+    &:hover:not(:disabled) {
+      background: $button-primary-bg-hover;
+    }
+  }
+
+  &.loading {
+    padding: $space-s $space-l;
+    background: $button-primary-bg !important;
+  }
+
+  &.loadingAndDisabled {
+    background: $button-primary-bg-disabled !important;
+    cursor: not-allowed !important;
+  }
+
+  &:disabled:not(.loading) {
+    background: $button-primary-bg-disabled;
+    cursor: not-allowed;
+  }
+
+  .loader {
+    width: 24px;
+    height: 24px;
+    color: $button-primary-text !important;
+  }
+}
+
+.text {
+  display: flex;
+  align-items: center;
+  font-size: 18px;
+  line-height: 18px;
+  color: $button-primary-text;
+}

@@ -1,0 +1,96 @@
+@use "../../styles/variables.scss" as *;
+
+.text {
+  margin: 0;
+  padding: 0;
+  font-family: "Roboto", sans-serif;
+  font-style: normal;
+
+  &_tag {
+    &_h2 {
+      font-size: 32px;
+    }
+    &_h1 {
+      font-size: 44px;
+    }
+  }
+
+  &_view {
+    &_title {
+      width: 336px;
+      height: 48px;
+      font-weight: 500;
+      line-height: 24px;
+      color: $text-primary;
+      display: -webkit-box;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    &_button {
+      font-size: 18px;
+      line-height: 18px;
+    }
+
+    &_p-20 {
+      font-size: 20px;
+      line-height: 24px;
+    }
+
+    &_p-18 {
+      font-size: 18px;
+      line-height: 22px;
+    }
+
+    &_p-16 {
+      font-size: 16px;
+      line-height: 20px;
+    }
+
+    &_p-14 {
+      font-size: 14px;
+      line-height: 18px;
+    }
+  }
+
+  &_weight {
+    &_normal {
+      font-weight: 400;
+    }
+
+    &_medium {
+      font-weight: 500;
+    }
+
+    &_bold {
+      font-weight: 700;
+    }
+  }
+
+  &_color {
+    &_primary {
+      color: $text-primary;
+    }
+
+    &_white {
+      color: $text-white;
+    }
+
+    &_secondary {
+      color: $text-secondary;
+    }
+
+    &_accent {
+      color: $text-accent;
+    }
+  }
+
+  &_hasMaxLines {
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    overflow-wrap: break-word;
+  }
+}

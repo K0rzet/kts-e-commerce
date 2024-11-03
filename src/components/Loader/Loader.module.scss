@@ -1,0 +1,47 @@
+@use '../../styles/variables.scss' as *;
+
+.loader {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: var(--loader-bg, $brand);
+}
+
+.loaderSpinner {
+    animation: spin 1s linear infinite;
+}
+
+// Размеры loader
+@mixin loader-size($container, $spinner) {
+    width: $container;
+    height: $container;
+
+    .loaderSpinner {
+        width: $spinner;
+        height: $spinner;
+    }
+}
+
+.loader {
+    &_size_l {
+        @include loader-size(60px, 40px);
+    }
+
+    &_size_m {
+        @include loader-size(48px, 32px);
+    }
+
+    &_size_s {
+        @include loader-size(24px, 16px);
+    }
+}
+
+@keyframes spin {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}

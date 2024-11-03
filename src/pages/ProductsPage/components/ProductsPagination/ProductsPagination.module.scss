@@ -1,0 +1,80 @@
+@use '../../../../styles/variables.scss' as *;
+
+.pagination {
+  display: flex;
+  align-items: center;
+  gap: $space-s;
+  font-family: 'Eudoxus Sans', sans-serif;
+  justify-content: center;
+  margin-top: 48px;
+}
+
+.pages {
+  display: flex;
+  gap: $space-xs;
+}
+
+.pageButton {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 38px;
+  height: 42px;
+  padding: 10px;
+  font-size: 18px;
+  font-weight: 500;
+  line-height: 180%;
+  color: $text-primary;
+  background: transparent;
+  border: 1.5px solid $text-secondary;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+
+  &:hover:not(:disabled) {
+    border-color: $brand;
+    color: $brand;
+  }
+
+  &:hover:disabled {
+    cursor: not-allowed;
+  }
+
+  &.active {
+    background: $brand;
+    color: $text-white;
+    border-color: $brand;
+  }
+
+  &.ellipsis {
+    border: none;
+    cursor: default;
+
+    &:hover {
+      border: none;
+      color: $text-primary;
+    }
+  }
+
+}
+
+.arrow {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 38px;
+  height: 42px;
+  background: transparent;
+  border: 1.5px solid $text-secondary;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+
+  &:hover:not(:disabled) {
+    border-color: $brand;
+    color: $brand;
+  }
+
+  &:disabled {
+    cursor: not-allowed;
+    opacity: 0.5;
+  }
+}
