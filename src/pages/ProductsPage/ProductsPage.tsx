@@ -7,7 +7,7 @@ import Text from '../../components/Text';
 import styles from './ProductPage.module.scss';
 import Loader from '../../components/Loader';
 import ProductsPagination from './components/ProductsPagination';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 
 interface ProductsState {
   data: IProduct[];
@@ -24,28 +24,32 @@ const INITIAL_STATE: ProductsState = {
 };
 
 const ProductsPage: React.FC = () => {
-  const [state, setState] = useState<ProductsState>(INITIAL_STATE);
-  const [page, setPage] = useState<number>(1);
+  const [searchParams, setSearchParams] = useSearchParams();
+  const currentPage = Number(searchParams.get('page')) || 1;
   const PAGE_LIMIT = 9;
-  const handleAddToCart = (id: number, event: React.MouseEvent) => {
-    event.stopPropagation();
-    console.log(`add to cart ${id}`);
-  };
 
+  const [state, setState] = useState<ProductsState>(INITIAL_STATE);
   const navigate = useNavigate();
+
+  const handlePageChange = (newPage: number) => {
+    setSearchParams({ page: newPage.toString() });
+  };
 
   useEffect(() => {
     const fetchProducts = async () => {
       try {
         setState((prev) => ({ ...prev, isLoading: true }));
         const [productsResponse, totalResponse] = await Promise.all([
-          productsService.getProducts(PAGE_LIMIT, PAGE_LIMIT * (page - 1)),
+          productsService.getProducts(PAGE_LIMIT, PAGE_LIMIT * (currentPage - 1)),
           productsService.getProducts(),
         ]);
 
-        setState((prev) => ({ ...prev, data: productsResponse.data }));
-        setState((prev) => ({ ...prev, totalCount: totalResponse.data.length }));
-        setState((prev) => ({ ...prev, error: null }));
+        setState((prev) => ({ 
+          ...prev, 
+          data: productsResponse.data,
+          totalCount: totalResponse.data.length,
+          error: null 
+        }));
       } catch (error) {
         setState((prev) => ({ ...prev, error: (error as Error).message }));
       } finally {
@@ -54,10 +58,11 @@ const ProductsPage: React.FC = () => {
     };
 
     fetchProducts();
-  }, [page]);
+  }, [currentPage]);
 
-  const handlePageChange = (newPage: number) => {
-    setPage(newPage);
+  const handleAddToCart = (id: number, event: React.MouseEvent) => {
+    event.stopPropagation();
+    console.log(`add to cart ${id}`);
   };
 
   return (
@@ -83,7 +88,6 @@ const ProductsPage: React.FC = () => {
             actionSlot={
               <Button
                 onClick={(event) => handleAddToCart(product.id, event)}
-                // loading={isLoading}
               >
                 Add to Cart
               </Button>
@@ -92,7 +96,7 @@ const ProductsPage: React.FC = () => {
         ))}
       </div>
       <ProductsPagination
-        currentPage={page}
+        currentPage={currentPage}
         totalPages={Math.ceil(state.totalCount / PAGE_LIMIT)}
         onPageChange={handlePageChange}
         className={styles.pagination}
