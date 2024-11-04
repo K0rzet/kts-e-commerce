@@ -10,7 +10,7 @@ export type ButtonProps = React.ButtonHTMLAttributes<HTMLButtonElement> & {
   children: React.ReactNode;
 };
 
-const Button: React.FC<ButtonProps> = ({ 
+const Button: React.FC<ButtonProps> = React.memo(({ 
   children, 
   className, 
   loading, 
@@ -46,6 +46,8 @@ const Button: React.FC<ButtonProps> = ({
       <span className={styles.text}>{children}</span>
     </button>
   );
-};
+});
+
+Button.displayName = 'Button';
 
 export default Button;

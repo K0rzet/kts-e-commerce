@@ -23,7 +23,7 @@ export type CardProps = {
   actionSlot?: React.ReactNode;
 };
 
-const ProductCard: React.FC<CardProps> = ({
+const ProductCard: React.FC<CardProps> = React.memo(({
   className,
   images,
   title,
@@ -100,6 +100,8 @@ const ProductCard: React.FC<CardProps> = ({
       </div>
     </div>
   );
-};
+});
+
+ProductCard.displayName = 'ProductCard';
 
 export default ProductCard;

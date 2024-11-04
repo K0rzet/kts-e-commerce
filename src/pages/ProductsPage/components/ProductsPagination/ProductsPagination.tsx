@@ -15,11 +15,23 @@ const ProductsPagination: React.FC<ProductsPaginationProps> = ({
   onPageChange,
   className
 }) => {
+  const handlePrevPage = () => {
+    onPageChange(currentPage - 1);
+  };
+
+  const handleNextPage = () => {
+    onPageChange(currentPage + 1);
+  };
+
+  const handlePageClick = (page: number) => {
+    onPageChange(page);
+  };
+
   return (
     <div className={classNames(styles.pagination, className)}>
       <button
         className={styles.arrow}
-        onClick={() => onPageChange(currentPage - 1)}
+        onClick={handlePrevPage}
         disabled={currentPage === 1}
       >
         ←
@@ -28,7 +40,7 @@ const ProductsPagination: React.FC<ProductsPaginationProps> = ({
       <div className={styles.pages}>
         <button
           className={classNames(styles.pageButton, currentPage === 1 && styles.active)}
-          onClick={() => onPageChange(1)}
+          onClick={() => handlePageClick(1)}
           disabled={currentPage === 1}
         >
           1
@@ -54,7 +66,7 @@ const ProductsPagination: React.FC<ProductsPaginationProps> = ({
               <button
                 key={page}
                 className={classNames(styles.pageButton, currentPage === page && styles.active)}
-                onClick={() => onPageChange(page)}
+                onClick={() => handlePageClick(page)}
                 disabled={currentPage === page}
               >
                 {page}
@@ -73,7 +85,7 @@ const ProductsPagination: React.FC<ProductsPaginationProps> = ({
         {totalPages > 1 && (
           <button
             className={classNames(styles.pageButton, currentPage === totalPages && styles.active)}
-            onClick={() => onPageChange(totalPages)}
+            onClick={() => handlePageClick(totalPages)}
             disabled={currentPage === totalPages}
           >
             {totalPages}
@@ -83,7 +95,7 @@ const ProductsPagination: React.FC<ProductsPaginationProps> = ({
 
       <button
         className={styles.arrow}
-        onClick={() => onPageChange(currentPage + 1)}
+        onClick={handleNextPage}
         disabled={currentPage === totalPages}
       >
         →
