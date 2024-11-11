@@ -1,17 +1,16 @@
 import { makeObservable, observable, computed, action, runInAction } from 'mobx';
-import { ICategory } from '../types/category.types';
-import categoriesService from '../services/categories.service';
-import { Meta } from '../constants/meta';
-import { ILocalStore } from '../hooks/useLocalStore';
-import { CollectionModel, getInitialCollectionModel, normalizeCollection, linearizeCollection } from '../utils/collection';
+import { ICategory } from '@/types/category.types';
+import categoriesService from '@/services/categories.service';
+import { Meta } from '@/constants/meta';
+import { ILocalStore } from '@/hooks/useLocalStore';
+import { CollectionModel, getInitialCollectionModel, normalizeCollection, linearizeCollection } from '@/utils/collection';
 
 type PrivateFields = '_categories' | '_meta' | '_selectedCategories';
 
-export default class CategoryStore implements ILocalStore {
+export class CategoryStore implements ILocalStore {
   private _categories: CollectionModel<number, ICategory> = getInitialCollectionModel();
   private _selectedCategories: number[] = [];
   private _meta: Meta = Meta.initial;
-  private _abortController: AbortController | null = null;
 
   constructor() {
     makeObservable<CategoryStore, PrivateFields>(this, {
@@ -43,11 +42,7 @@ export default class CategoryStore implements ILocalStore {
   }
 
   async getCategories(): Promise<void> {
-    if (this._abortController) {
-      this._abortController.abort();
-    }
-
-    this._abortController = new AbortController();
+    if (this._meta === Meta.loading) return;
 
     runInAction(() => {
       this._meta = Meta.loading;
@@ -55,32 +50,27 @@ export default class CategoryStore implements ILocalStore {
 
     try {
       const response = await categoriesService.getCategories();
-
-      if (!this._abortController.signal.aborted) {
-        runInAction(() => {
-          this._categories = normalizeCollection(
-            response,
-            (category) => category.id
-          );
-          this._meta = Meta.success;
-        });
-      }
+      
+      runInAction(() => {
+        this._categories = normalizeCollection(
+          response,
+          (category) => category.id
+        );
+        this._meta = Meta.success;
+      });
     } catch (error) {
-      if (error instanceof Error && error.name === 'AbortError') {
-        return;
-      }
-
       runInAction(() => {
         this._meta = Meta.error;
+        this._categories = getInitialCollectionModel();
       });
-    } finally {
-      this._abortController = null;
+      
+      console.error('Failed to fetch categories:', error);
     }
   }
 
   destroy(): void {
-    if (this._abortController) {
-      this._abortController.abort();
-    }
+    this._categories = getInitialCollectionModel();
+    this._selectedCategories = [];
+    this._meta = Meta.initial;
   }
-} 
+}

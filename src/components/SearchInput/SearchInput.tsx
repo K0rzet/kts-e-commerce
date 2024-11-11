@@ -1,7 +1,7 @@
 import React, { useCallback, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
-import Input from '../Input';
-import Button from '../Button';
+import Input from '@/components/Input';
+import Button from '@/components/Button';
 import styles from './SearchInput.module.scss';
 
 const SearchInput: React.FC = () => {

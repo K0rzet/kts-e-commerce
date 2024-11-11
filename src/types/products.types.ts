@@ -1,3 +1,5 @@
+import { ICategory } from "./category.types";
+
 export interface IProduct {
   id: number;
   title: string;
@@ -5,14 +7,10 @@ export interface IProduct {
   description: string;
   images: string[];
   category: ICategory;
-  creationAt: string;
-  updatedAt: string;
 }
-
-export interface ICategory {
-  id: number;
-  name: string;
-  image: string;
-  creationAt: string;
-  updatedAt: string;
+export interface IGetProductsParams {
+  limit?: number;
+  offset?: number;
+  title?: string;
+  categoryId?: number;
 }

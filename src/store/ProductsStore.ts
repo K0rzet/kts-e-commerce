@@ -1,27 +1,31 @@
 import { makeObservable, observable, computed, action, runInAction } from 'mobx';
-import { IProduct } from '../types/products.types';
-import productsService from '../services/products.service';
-import { Meta } from '../constants/meta';
-import { ILocalStore } from '../hooks/useLocalStore';
-import { CollectionModel, getInitialCollectionModel, normalizeCollection } from '../utils/collection';
+import { IGetProductsParams, IProduct } from '@/types/products.types';
+import productsService from '@/services/products.service';
+import { Meta } from '@/constants/meta';
+import { ILocalStore } from '@/hooks/useLocalStore';
+import { CollectionModel, getInitialCollectionModel } from '@/utils/collection';
 
-type PrivateFields = '_products' | '_meta' | '_totalCount';
+type PrivateFields = '_products' | '_meta' | '_totalCount' | '_isInitialized' | '_lastUsedCategoryId';
 
-export default class ProductsStore implements ILocalStore {
+
+export class ProductsStore implements ILocalStore {
   private _products: CollectionModel<number, IProduct> = getInitialCollectionModel();
   private _meta: Meta = Meta.initial;
   private _totalCount: number = 0;
-  private _abortController: AbortController | null = null;
+  private _isInitialized: boolean = false;
+  private _lastUsedCategoryId: number | undefined;
 
   constructor() {
     makeObservable<ProductsStore, PrivateFields>(this, {
       _products: observable.ref,
       _meta: observable,
       _totalCount: observable,
+      _isInitialized: observable,
+      _lastUsedCategoryId: observable,
       products: computed,
       meta: computed,
       totalCount: computed,
-      getProducts: action
+      getProducts: action,
     });
   }
 
@@ -37,78 +41,52 @@ export default class ProductsStore implements ILocalStore {
     return this._totalCount;
   }
 
-  async getProducts(
-    limit: number, 
-    offset: number, 
-    title?: string, 
-    categoryIds?: number[]
-  ): Promise<void> {
-    if (this._abortController) {
-      this._abortController.abort();
-    }
-
-    this._abortController = new AbortController();
-
-    runInAction(() => {
-      this._meta = Meta.loading;
-    });
-
+  async getProducts({limit = 9, offset = 0, title, categoryId}: Partial<IGetProductsParams>): Promise<void> {
     try {
-      let productsResponse;
-      let allProducts: IProduct[] = [];
+      this._meta = Meta.loading;
+      
+      const productsResponse = await productsService.getProducts({limit, offset, title, categoryId});
 
-      if (categoryIds && categoryIds.length > 0) {
-        const categoryPromises = categoryIds.map(categoryId =>
-          productsService.getProductsByCategory(categoryId)
-        );
-        const categoryResults = await Promise.all(categoryPromises);
-        
-        allProducts = categoryResults.flatMap(result => result);
+      const shouldUpdateTotalCount = !this._isInitialized || 
+        title !== undefined || 
+        categoryId !== undefined || 
+        (this._lastUsedCategoryId !== undefined && categoryId === undefined);
 
-        if (title) {
-          allProducts = allProducts.filter(product => 
-            product.title.toLowerCase().includes(title.toLowerCase())
-          );
-        }
-
-        productsResponse = {
-          data: allProducts.slice(offset, offset + limit)
-        };
-      } else {
-        productsResponse = await productsService.getProducts(limit, offset, title);
-        
-        const allProductsResponse = await productsService.getProducts(undefined, undefined, title);
-        allProducts = allProductsResponse.data;
-      }
-
-      if (!this._abortController.signal.aborted) {
-        runInAction(() => {
-          this._products = normalizeCollection(
-            productsResponse.data,
-            (product) => product.id
-          );
-          this._totalCount = allProducts.length;
-          this._meta = Meta.success;
+      if (shouldUpdateTotalCount) {
+        const totalCountResponse = await productsService.getProducts({
+          title,
+          categoryId
         });
-      }
-    } catch (error) {
-      if (error instanceof Error && error.name === 'AbortError') {
-        return;
+        runInAction(() => {
+          this._totalCount = totalCountResponse.data.length;
+          this._isInitialized = true;
+          this._lastUsedCategoryId = categoryId;
+        });
       }
 
       runInAction(() => {
+        this._products = {
+          order: productsResponse.data.map(product => product.id),
+          entities: productsResponse.data.reduce((acc, product) => {
+            acc[product.id] = product;
+            return acc;
+          }, {} as Record<number, IProduct>)
+        };
+        this._meta = Meta.success;
+      });
+    } catch (error) {
+      runInAction(() => {
         this._meta = Meta.error;
       });
-
       console.error('Failed to fetch products:', error);
-    } finally {
-      this._abortController = null;
     }
   }
 
   destroy(): void {
-    if (this._abortController) {
-      this._abortController.abort();
-    }
+    this._products = getInitialCollectionModel();
+    this._totalCount = 0;
+    this._isInitialized = false;
+    this._lastUsedCategoryId = undefined;
+    this._meta = Meta.initial;
   }
-} 
+}

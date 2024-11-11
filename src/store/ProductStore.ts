@@ -1,22 +1,29 @@
 import { makeAutoObservable, runInAction, action } from 'mobx';
-import { IProduct } from '../types/products.types';
-import productsService from '../services/products.service';
+import { IProduct } from '@/types/products.types';
+import productsService from '@/services/products.service';
+import { ILocalStore } from '@/hooks/useLocalStore';
 
-class ProductStore {
+export class ProductStore implements ILocalStore {
   product: IProduct | null = null;
   isLoading: boolean = false;
   error: string | null = null;
   currentImageIndex: number = 0;
 
   constructor() {
-    makeAutoObservable(this);
+    makeAutoObservable(this, {
+      setCurrentImageIndex: action,
+      handlePrevImage: action,
+      handleNextImage: action,
+      fetchProduct: action,
+    });
   }
 
-  resetState = action(() => {
+
+  destroy(): void {
     this.product = null;
     this.currentImageIndex = 0;
     this.error = null;
-  });
+  };
 
   setCurrentImageIndex = (index: number) => {
     runInAction(() => {
@@ -76,5 +83,3 @@ class ProductStore {
     }
   }
 }
-
-export const productStore = new ProductStore();

@@ -1,26 +1,30 @@
 import { observer } from 'mobx-react-lite';
-import { productStore } from '../../../../store/ProductStore';
-import Text from '../../../../components/Text';
-import Button from '../../../../components/Button';
+import Text from '@/components/Text';
+import Button from '@/components/Button';
 import styles from './ProductDetails.module.scss';
+import { ProductStore } from '@/store/ProductStore';
 
-export const ProductDetails = observer(() => {
-  console.log('ProductDetails rendered');
+interface ProductDetailsProps {
+  store: ProductStore;
+}
 
-  if (!productStore.product) return null;
+export const ProductDetails = observer(({ store }: ProductDetailsProps) => {
+  const { product } = store;
+
+  if (!product) return null;
 
   return (
     <div className={styles.details}>
       <Text tag="h1" weight="bold" className={styles.title}>
-        {productStore.product.title}
+        {product.title}
       </Text>
 
       <Text view="p-18" color="secondary" className={styles.description}>
-        {productStore.product.description}
+        {product.description}
       </Text>
 
       <Text view="p-20" weight="bold" className={styles.price}>
-        ${productStore.product.price}
+        ${product.price}
       </Text>
 
       <div className={styles.actions}>

@@ -1,39 +1,17 @@
 import axios from 'axios';
-import { API_URL } from '../config/api.config';
-import { IProduct } from '../types/products.types';
+import { API_URL } from '@/config/api.config';
+import { IGetProductsParams, IProduct } from '@/types/products.types';
 
 
 class ProductsService {
-  async getProducts(limit?: number, offset?: number, title?: string) {
-    let requestUrl = `${API_URL}/products`;
-    if (limit) requestUrl += `?limit=${limit}&offset=${offset ? offset : 0}`;
-    if (title) {
-      if (requestUrl.includes('?')) {
-        requestUrl += `&title=${title}`;
-      } else {
-        requestUrl += `?title=${title}`;
-      }
-    }
+  private requestUrl = `${API_URL}/products`;
 
-    return axios.get<IProduct[]>(requestUrl);
+  async getProducts({limit, offset, title, categoryId}: IGetProductsParams) {
+    return axios.get<IProduct[]>(this.requestUrl, { params: { limit, offset, title, categoryId } });
   }
 
   async getProduct(id: number) {
-    return await axios.get<IProduct>(`${API_URL}/products/${id}`);
-  }
-
-  async getProductsByCategory(
-    categoryId: number,
-    limit?: number,
-    offset?: number
-  ): Promise<IProduct[]> {
-    const response = await axios.get(`${API_URL}/categories/${categoryId}/products`, {
-      params: {
-        limit,
-        offset,
-      },
-    });
-    return response.data;
+    return await axios.get<IProduct>(`${this.requestUrl}/${id}`);
   }
 }
 

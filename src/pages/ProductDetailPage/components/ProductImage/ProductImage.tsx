@@ -1,32 +1,36 @@
 import { observer } from 'mobx-react-lite';
-import { productStore } from '../../../../store/ProductStore';
+import { ProductStore } from '@/store/ProductStore';
 import styles from './ProductImage.module.scss';
 
-export const ProductImage = observer(() => {
-  console.log('ProductImage rendered');
+interface ProductImageProps {
+  store: ProductStore;
+}
 
-  if (!productStore.product) return null;
+export const ProductImage = observer(({ store }: ProductImageProps) => {
+  const { product, currentImageIndex, handlePrevImage, handleNextImage } = store;
+
+  if (!product) return null;
 
   return (
     <div className={styles.imageSection}>
       <button
         className={styles.arrowButton}
-        onClick={productStore.handlePrevImage}
+        onClick={handlePrevImage}
         aria-label="Previous image"
-        disabled={!productStore.product.images || productStore.product.images.length <= 1}
+        disabled={!product.images || product.images.length <= 1}
       />
 
       <img
-        src={productStore.product.images[productStore.currentImageIndex]}
-        alt={productStore.product.title}
+        src={product.images[currentImageIndex]}
+        alt={product.title}
         className={styles.productImage}
       />
 
       <button
         className={styles.arrowButton}
-        onClick={productStore.handleNextImage}
+        onClick={handleNextImage}
         aria-label="Next image"
-        disabled={!productStore.product.images || productStore.product.images.length <= 1}
+        disabled={!product.images || product.images.length <= 1}
       />
     </div>
   );

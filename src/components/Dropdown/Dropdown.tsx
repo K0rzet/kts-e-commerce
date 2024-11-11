@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
-import Input from '../Input';
-import styles from './MultiDropdown.module.scss';
+import Input from '@/components/Input';
+import styles from './Dropdown.module.scss';
 
 export type Option = {
   /** Ключ варианта, используется для отправки на бек/использования в коде */
@@ -10,21 +10,21 @@ export type Option = {
 };
 
 /** Пропсы, которые принимает компонент Dropdown */
-export type MultiDropdownProps = {
+export type DropdownProps = {
   className?: string;
   /** Массив возможных вариантов для выбора */
   options: Option[];
-  /** Текущие выбранные значения поля, может быть пустым */
-  value: Option[];
+  /** Текущее выбранное значение поля, может быть пустым */
+  value: Option | null | undefined;
   /** Callback, вызываемый при выборе варианта */
-  onChange: (value: Option[]) => void;
+  onChange: (value: Option | null) => void;
   /** Заблокирован ли дропдаун */
   disabled?: boolean;
-  /** Возвращает строку которая будет выводится в инпуте. В случае если опции не выбраны, строка должна отображаться как placeholder. */
-  getTitle: (value: Option[]) => string;
+  /** Возвращает строку которая будет выводится в инпуте */
+  getTitle: (value: Option | null) => string;
 };
 
-const MultiDropdown: React.FC<MultiDropdownProps> = ({
+const Dropdown: React.FC<DropdownProps> = ({
   className,
   options,
   value,
@@ -32,6 +32,8 @@ const MultiDropdown: React.FC<MultiDropdownProps> = ({
   disabled,
   getTitle
 }) => {
+  console.log('Dropdown rendered: ', value);
+
   const [isOpen, setIsOpen] = useState(false);
   const [filter, setFilter] = useState('');
   const rootRef = useRef<HTMLDivElement>(null);
@@ -47,12 +49,14 @@ const MultiDropdown: React.FC<MultiDropdownProps> = ({
   };
 
   const handleOptionClick = (option: Option) => {
-    const isSelected = value.some(item => item.key === option.key);
+    const isSelected = value?.key === option.key;
     if (isSelected) {
-      onChange(value.filter(item => item.key !== option.key));
+      onChange(null);
     } else {
-      onChange([...value, option]);
+      onChange(option);
     }
+    setIsOpen(false);
+    setFilter('');
   };
 
   const handleInputChange = (newFilter: string) => {
@@ -76,7 +80,7 @@ const MultiDropdown: React.FC<MultiDropdownProps> = ({
     };
   }, [handleClickOutside]);
 
-  const displayValue = value.length > 0 ? getTitle(value) : '';
+  const displayValue = value ? getTitle(value) : '';
 
   return (
     <div 
@@ -88,7 +92,7 @@ const MultiDropdown: React.FC<MultiDropdownProps> = ({
         onChange={handleInputChange}
         onClick={handleInputClick}
         disabled={disabled}
-        placeholder={getTitle(value)}
+        placeholder={getTitle(null)}
         afterSlot={
           <div className={styles.arrow}>
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
@@ -103,7 +107,7 @@ const MultiDropdown: React.FC<MultiDropdownProps> = ({
             <div
               key={option.key}
               className={`${styles.option} ${
-                value.some(item => item.key === option.key) ? styles.selected : ''
+                value?.key === option.key ? styles.selected : ''
               }`}
               onClick={() => handleOptionClick(option)}
             >
@@ -116,4 +120,4 @@ const MultiDropdown: React.FC<MultiDropdownProps> = ({
   );
 };
 
-export default MultiDropdown;
+export default Dropdown;
