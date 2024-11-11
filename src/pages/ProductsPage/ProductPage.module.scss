@@ -34,4 +34,11 @@
       justify-content: center;
     }
   }
+
+  .filters {
+    display: flex;
+    gap: $space-m;
+    width: 100%;
+    max-width: 600px;
+  }
 }

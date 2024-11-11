@@ -1,0 +1,38 @@
+@use "../../../../styles/variables.scss" as *;
+
+.details {
+  display: flex;
+  flex-direction: column;
+}
+
+.title {
+  font-size: 32px;
+  line-height: 1.2;
+  word-break: normal;
+}
+
+.description {
+  margin-top: $space-xl;
+  word-break: normal;
+}
+
+.price {
+  font-size: 44px;
+  color: $text-primary;
+  margin-top: 80px;
+}
+
+.actions {
+  display: flex;
+  gap: calc($space-xl * 2);
+  margin-top: calc($space-xl * 2);
+}
+
+.addToCartButton {
+  background: $text-white;
+  border: 1px solid $text-secondary;
+
+  > span {
+    color: $text-primary;
+  }
+}
