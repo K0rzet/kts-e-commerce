@@ -32,7 +32,6 @@ const Dropdown: React.FC<DropdownProps> = ({
   disabled,
   getTitle
 }) => {
-  console.log('Dropdown rendered: ', value);
 
   const [isOpen, setIsOpen] = useState(false);
   const [filter, setFilter] = useState('');

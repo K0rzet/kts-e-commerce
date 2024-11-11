@@ -64,7 +64,6 @@ export class CategoryStore implements ILocalStore {
         this._categories = getInitialCollectionModel();
       });
       
-      console.error('Failed to fetch categories:', error);
     }
   }
 
