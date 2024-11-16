@@ -4,7 +4,7 @@ import { useNavigate, useSearchParams } from 'react-router-dom';
 import ProductCard from '@/components/ProductCard';
 import Button from '@/components/Button';
 import Text from '@/components/Text';
-import styles from './ProductPage.module.scss';
+import * as styles from './ProductsPage.module.scss';
 import Loader from '@/components/Loader';
 import ProductsPagination from './components/ProductsPagination';
 import { useProducts } from './hooks/useProducts';
@@ -12,8 +12,10 @@ import SearchInput from '@/components/SearchInput';
 import Dropdown from '@/components/Dropdown';
 import { Option } from '@/components/Dropdown';
 import { Meta } from '@/constants/meta';
-import { useLocalStore } from 'mobx-react-lite';
 import { CategoryStore } from '@/store/CategoryStore';
+import { useLocalStore } from '@/hooks/useLocalStore';
+
+console.log('Styles:', styles);
 
 const ProductsPage: React.FC = observer(() => {
   const categoryStore = useLocalStore(() => new CategoryStore());

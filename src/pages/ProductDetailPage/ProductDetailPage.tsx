@@ -2,12 +2,13 @@ import { useEffect, useCallback } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { observer } from 'mobx-react-lite';
 import { useLocalStore } from 'mobx-react-lite';
-import styles from './ProductDetailPage.module.scss';
+import * as styles from './ProductDetailPage.module.scss';
 import Loader from '@/components/Loader';
 import Text from '@/components/Text';
 import { ProductImage } from './components/ProductImage';
 import { ProductDetails } from './components/ProductDetails';
 import { ProductStore } from '@/store/ProductStore';
+import React from 'react';
 
 const ProductDetailPage = observer(() => {
   const productStore = useLocalStore(() => new ProductStore());

@@ -1,6 +1,7 @@
 import { observer } from 'mobx-react-lite';
 import { ProductStore } from '@/store/ProductStore';
-import styles from './ProductImage.module.scss';
+import * as styles from './ProductImage.module.scss';
+import React from 'react';
 
 interface ProductImageProps {
   store: ProductStore;

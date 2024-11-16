@@ -13,7 +13,7 @@ export class ProductsStore implements ILocalStore {
   private _meta: Meta = Meta.initial;
   private _totalCount: number = 0;
   private _isInitialized: boolean = false;
-  private _lastUsedCategoryId: number | undefined;
+  private _lastUsedCategoryId: number | undefined = undefined;
 
   constructor() {
     makeObservable<ProductsStore, PrivateFields>(this, {
