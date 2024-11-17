@@ -1,6 +1,6 @@
 import React from 'react';
 import classNames from 'classnames';
-import styles from './ProductsPagination.module.scss';
+import * as styles from './ProductsPagination.module.scss';
 
 interface ProductsPaginationProps {
   currentPage: number;

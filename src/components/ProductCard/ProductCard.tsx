@@ -1,8 +1,8 @@
 import React from 'react';
-import styles from './ProductCard.module.scss';
+import * as styles from './ProductCard.module.scss';
 import Text from '@/components/Text';
 import classNames from 'classnames';
-import { ICategory } from '@/types/products.types';
+import { ICategory } from '@/types/category.types';
 
 export type CardProps = {
   /** Дополнительный classname */
@@ -56,7 +56,6 @@ const ProductCard: React.FC<CardProps> = React.memo(({
             color="secondary"
             maxLines={1}
             tag="div"
-            className={styles.caption}
           >
             {category.name}
           </Text>
@@ -67,7 +66,6 @@ const ProductCard: React.FC<CardProps> = React.memo(({
             weight="bold"
             maxLines={2}
             tag="div"
-            className={styles.title}
           >
             {title}
           </Text>
@@ -78,7 +76,6 @@ const ProductCard: React.FC<CardProps> = React.memo(({
             color="secondary"
             maxLines={3}
             tag="div"
-            className={styles.subtitle}
           >
             {description}
           </Text>

@@ -1,8 +1,9 @@
 import { observer } from 'mobx-react-lite';
 import Text from '@/components/Text';
 import Button from '@/components/Button';
-import styles from './ProductDetails.module.scss';
+import * as styles from './ProductDetails.module.scss';
 import { ProductStore } from '@/store/ProductStore';
+import React from 'react';
 
 interface ProductDetailsProps {
   store: ProductStore;

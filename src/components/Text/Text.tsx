@@ -1,6 +1,6 @@
 import React, { useEffect, useRef } from 'react';
 import classNames from 'classnames';
-import styles from './Text.module.scss';
+import * as styles from './Text.module.scss';
 
 export type TextProps = {
   /** Дополнительный класс */
