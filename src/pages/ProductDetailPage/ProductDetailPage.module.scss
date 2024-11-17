@@ -1,0 +1,34 @@
+@use "../../styles/variables.scss" as *;
+
+.container {
+  max-width: 1300px;
+  margin: 0 auto;
+  padding: $space-xl;
+}
+
+.backButton {
+  background: none;
+  border: none;
+  font-size: 18px;
+  color: $text-primary;
+  cursor: pointer;
+  padding: $space-s;
+  margin-bottom: $space-xl;
+
+  &:hover {
+    color: $brand;
+  }
+}
+
+.content {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: calc($space-xl * 2);
+}
+
+.loader {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}

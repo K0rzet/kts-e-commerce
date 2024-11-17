@@ -1,0 +1,44 @@
+@use "../../styles/variables.scss" as *;
+
+.productsWrapper {
+  max-width: 1280px;
+  margin: 0 auto;
+
+  h2 {
+    display: flex;
+    align-items: center;
+    gap: $space-xs;
+  }
+
+  .productsCount {
+    font-weight: 700;
+    font-size: 20px;
+    line-height: 24px;
+    color: $text-accent;
+  }
+
+  .products {
+    margin-top: 32px;
+    display: grid;
+    grid-template-columns: repeat(3, 348px);
+    gap: $space-l;
+    justify-content: space-between;
+
+    @media (max-width: 1200px) {
+      grid-template-columns: repeat(2, 348px);
+      justify-content: space-evenly;
+    }
+
+    @media (max-width: 800px) {
+      grid-template-columns: 348px;
+      justify-content: center;
+    }
+  }
+
+  .filters {
+    display: flex;
+    gap: $space-m;
+    width: 100%;
+    max-width: 600px;
+  }
+}

@@ -1,0 +1,8 @@
+@use '../../styles/variables' as *;
+
+.searchContainer {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  gap: $space-xl;
+} 
