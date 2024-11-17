@@ -12,7 +12,6 @@
     animation: spin 1s linear infinite;
 }
 
-// Размеры loader
 @mixin loader-size($container, $spinner) {
     width: $container;
     height: $container;

@@ -1,0 +1,38 @@
+@use '../../styles/variables' as *;
+.container {
+  position: relative;
+  width: 100%;
+}
+
+.options {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  margin-top: $space-xl;
+  background-color: $dropdown-options-bg;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.15);
+  z-index: 1000;
+}
+
+.option {
+  padding: $space-s $space-xs;
+  cursor: pointer;
+  color: $text-primary;
+  font-size: 16px;
+  line-height: 20px;
+
+  &:hover {
+    background-color: $input-bg-focus;
+  }
+
+  &.selected {
+    color: $text-accent;
+  }
+}
+
+.arrow {
+  display: flex;
+  align-items: center;
+  color: $text-secondary;
+} 

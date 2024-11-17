@@ -1,8 +1,8 @@
 import React from 'react';
 import styles from './ProductCard.module.scss';
-import Text from '../Text/Text';
+import Text from '@/components/Text';
 import classNames from 'classnames';
-import { ICategory } from '../../types/products.types';
+import { ICategory } from '@/types/products.types';
 
 export type CardProps = {
   /** Дополнительный classname */

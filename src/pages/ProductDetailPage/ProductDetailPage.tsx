@@ -1,142 +1,61 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useCallback } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import Button from '../../components/Button';
-import Text from '../../components/Text';
-import { IProduct } from '../../types/products.types';
-import productsService from '../../services/products.service';
+import { observer } from 'mobx-react-lite';
+import { useLocalStore } from 'mobx-react-lite';
 import styles from './ProductDetailPage.module.scss';
-import Loader from '../../components/Loader';
+import Loader from '@/components/Loader';
+import Text from '@/components/Text';
+import { ProductImage } from './components/ProductImage';
+import { ProductDetails } from './components/ProductDetails';
+import { ProductStore } from '@/store/ProductStore';
 
-interface ProductDetailPageState {
-  data: IProduct | null;
-  isLoading: boolean;
-  error: string | null;
-  currentImageIndex: number;
-}
-
-const ProductDetailPage = () => {
+const ProductDetailPage = observer(() => {
+  const productStore = useLocalStore(() => new ProductStore());
   const { id } = useParams();
   const navigate = useNavigate();
 
-  const [state, setState] = useState<ProductDetailPageState>({
-    data: null,
-    isLoading: false,
-    error: null,
-    currentImageIndex: 0,
-  });
-
   useEffect(() => {
-    const fetchProduct = async () => {
-      try {
-        setState((prev) => ({ ...prev, isLoading: true }));
-        const response = await productsService.getProduct(Number(id));
-        
-        const parsedImages = response.data.images.map(img => {
-          try {
-            return JSON.parse(img);
-          } catch {
-            return img;
-          }
-        }).flat();
-
-        setState((prev) => ({ 
-          ...prev, 
-          data: {
-            ...response.data,
-            images: parsedImages
-          },
-          error: null 
-        }));
-      } catch (error) {
-        setState((prev) => ({ ...prev, error: (error as Error).message }));
-      } finally {
-        setState((prev) => ({ ...prev, isLoading: false }));
+    const fetchData = async () => {
+      if (id) {
+        await productStore.fetchProduct(Number(id));
       }
     };
 
-    fetchProduct();
-  }, [id]);
+    fetchData();
+  }, [id, productStore]);
 
-  const handlePrevImage = () => {
-    if (!state.data?.images.length) return;
-    setState((prev) => ({
-      ...prev,
-      currentImageIndex: prev.currentImageIndex === 0 ? state.data !== null ? state.data.images.length - 1 : prev.currentImageIndex - 1 : 0,
-    }));
-  };
+  const handleNavigateBack = useCallback(() => {
+    navigate(-1);
+  }, [navigate]);
 
-  const handleNextImage = () => {
-    if (!state.data?.images.length) return;
-    setState((prev) => ({
-      ...prev,
-      currentImageIndex: prev.currentImageIndex === (state.data?.images.length || 0) - 1 ? 0 : prev.currentImageIndex + 1,
-    }));
-  };
-
-  if (state.isLoading) {
+  if (productStore.isLoading) {
     return <Loader size="l" className={styles.loader} />;
   }
 
-  if (state.error) {
+  if (productStore.error) {
     return (
       <Text view="p-20" color="secondary">
-        {state.error}
+        {productStore.error}
       </Text>
     );
   }
 
+  if (!productStore.product) {
+    return null;
+  }
+
   return (
     <div className={styles.container}>
-      <button onClick={() => navigate(-1)} className={styles.backButton}>
+      <button onClick={handleNavigateBack} className={styles.backButton}>
         ← Назад
       </button>
 
       <div className={styles.content}>
-        <div className={styles.imageSection}>
-          <button 
-            className={styles.arrowButton} 
-            onClick={handlePrevImage}
-            aria-label="Previous image"
-            disabled={!state.data?.images || state.data.images.length <= 1}
-          />
-          
-          {state.data?.images && (
-            <img 
-              src={state.data.images[state.currentImageIndex]} 
-              alt={state.data.title}
-              className={styles.productImage}
-            />
-          )}
-          
-          <button 
-            className={styles.arrowButton} 
-            onClick={handleNextImage}
-            aria-label="Next image"
-            disabled={!state.data?.images || state.data.images.length <= 1}
-          />
-        </div>
-
-        <div className={styles.details}>
-          <Text tag="h1" weight="bold" className={styles.title}>
-            {state.data?.title}
-          </Text>
-
-          <Text view="p-18" color="secondary" className={styles.description}>
-            {state.data?.description}
-          </Text>
-
-          <Text view="p-20" weight="bold" className={styles.price}>
-            ${state.data?.price}
-          </Text>
-
-          <div className={styles.actions}>
-            <Button>Buy Now</Button>
-            <Button className={styles.addToCartButton}>Add to Cart</Button>
-          </div>
-        </div>
+        <ProductImage store={productStore} />
+        <ProductDetails store={productStore} />
       </div>
     </div>
   );
-};
+});
 
 export default ProductDetailPage;
