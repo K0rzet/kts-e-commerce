@@ -1,32 +1,33 @@
+import Button from '@/components/Button'
 import React from 'react'
 import { useNavigate } from 'react-router-dom'
 
 export function AuthToggle({ isLogin }: { isLogin: boolean }) {
-	const navigate = useNavigate()
+	const navigate = useNavigate();
+	const handleRegister = () => navigate('/register');
+	const handleLogin = () => navigate('/login');
 
 	return (
 		<div className="text-center text-base mt-3">
 			{isLogin ? (
 				<p>
 					Нет аккаунта?{' '}
-					<button
+					<Button
 						type="button"
-						className="text-blue-500 text-base"
-						onClick={() => navigate('/register')}
+						onClick={handleRegister}
 					>
 						Зарегистрироваться
-					</button>
+					</Button>
 				</p>
 			) : (
 				<p>
 					Уже есть аккаунт?{' '}
-					<button
+					<Button
 						type="button"
-						className="text-teal-500 text-base"
-						onClick={() => navigate('/login')}
+						onClick={handleLogin}
 					>
 						Войти
-					</button>
+					</Button>
 				</p>
 			)}
 		</div>

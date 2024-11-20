@@ -1,5 +1,7 @@
+import UserAvatar from '@/components/UserAvatar';
 import CartIcon from '../components/CartIcon';
 import UserIcon from '../components/UserIcon';
+import { authStore } from '@/store/AuthStore';
 
 export const menuData = [
   {
@@ -18,7 +20,8 @@ export const menuData = [
     path: '/about-us',
   },
 ];
-export const menuIconsData = [
+
+export const getMenuIconsData = () => [
   {
     id: 1,
     path: '/cart',
@@ -27,8 +30,8 @@ export const menuIconsData = [
   },
   {
     id: 2,
-    path: '/login',
-    element: UserIcon,
-    description: 'Profile',
+    path: authStore.accessToken ? '/profile' : '/login',
+    element: authStore.accessToken ? UserAvatar : UserIcon,
+    description: !authStore.accessToken && 'Login',
   },
 ];

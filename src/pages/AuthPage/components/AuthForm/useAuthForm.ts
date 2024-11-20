@@ -8,7 +8,7 @@ import { useLocalStore } from '@/hooks/useLocalStore'
 
 export const useAuthForm = (isLogin: boolean) => {
   const navigate = useNavigate()
-  const { register, handleSubmit, reset } = useForm<IFormData>()
+  const { register, handleSubmit, reset, control } = useForm<IFormData>()
   const recaptchaRef = useRef<ReCAPTCHA>(null)
   
   const authFormStore = useLocalStore(() => new AuthFormStore())
@@ -40,6 +40,7 @@ export const useAuthForm = (isLogin: boolean) => {
 
   return {
     register,
+    control,
     handleSubmit,
     onSubmit,
     recaptchaRef,

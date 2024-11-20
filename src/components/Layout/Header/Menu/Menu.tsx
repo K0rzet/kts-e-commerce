@@ -1,13 +1,16 @@
 import React from 'react';
 import * as styles from './Menu.module.scss';
-import { menuData, menuIconsData } from './menu.data';
+import { menuData, getMenuIconsData } from './menu.data';
 import MenuItem from './MenuItem';
 import { Link, useLocation } from 'react-router-dom';
 import Logo from '../components/Logo';
 import classNames from 'classnames';
+import { observer } from 'mobx-react-lite';
 
-const Menu = () => {
+const Menu = observer(() => {
   const currentUrl = useLocation();
+  const menuIconsData = getMenuIconsData();
+
   return (
     <div className={styles.menuContainer}>
       <Logo />
@@ -28,6 +31,6 @@ const Menu = () => {
       </ul>
     </div>
   );
-};
+});
 
 export default Menu;

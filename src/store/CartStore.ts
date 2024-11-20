@@ -35,7 +35,6 @@ export class CartStore {
   }
 
   addToCart(product: IProduct) {
-    console.log('Adding to cart:', product);
     runInAction(() => {
       const existingItem = this.items.find(item => item.id === product.id);
       if (existingItem) {
