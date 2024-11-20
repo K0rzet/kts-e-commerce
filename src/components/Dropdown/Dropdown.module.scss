@@ -1,7 +1,7 @@
-@use '../../styles/variables' as *;
+@use '@/styles/variables' as *;
 .container {
   position: relative;
-  width: 100%;
+  max-width: 300px;
 }
 
 .options {
@@ -35,4 +35,5 @@
   display: flex;
   align-items: center;
   color: $text-secondary;
+  box-sizing: border-box;
 } 

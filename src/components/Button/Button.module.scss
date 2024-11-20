@@ -1,4 +1,4 @@
-@use '../../styles/variables.scss' as *;
+@use '@/styles/variables.scss' as *;
 
 .button {
   box-sizing: border-box;
@@ -10,12 +10,11 @@
   gap: $space-xxs;
   background: $button-primary-bg;
   height: 52px;
-
+  min-width: 137px;
   border: none;
   border-radius: 0;
 
   cursor: pointer;
-  width: auto;
   white-space: nowrap;
 
   &:not(.loading) {

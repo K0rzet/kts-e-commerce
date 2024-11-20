@@ -9,11 +9,23 @@ import { ProductImage } from './components/ProductImage';
 import { ProductDetails } from './components/ProductDetails';
 import { ProductStore } from '@/store/ProductStore';
 import React from 'react';
+import ProductCard from '@/components/ProductCard';
+import Button from '@/components/Button';
 
 const ProductDetailPage = observer(() => {
   const productStore = useLocalStore(() => new ProductStore());
   const { id } = useParams();
   const navigate = useNavigate();
+
+  const { product, relatedProducts } = productStore;
+
+  const categoryId = product?.category.id;
+
+  useEffect(() => {
+    if (categoryId) {
+      productStore.fetchRelatedItems(categoryId);
+    }
+  }, [categoryId, productStore]);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -55,6 +67,28 @@ const ProductDetailPage = observer(() => {
         <ProductImage store={productStore} />
         <ProductDetails store={productStore} />
       </div>
+
+      {relatedProducts.length > 0 && (
+        <div className={styles.relatedProducts}>
+          <Text view="title" weight="bold" tag="h2" className={styles.relatedTitle}>
+            Related Items
+          </Text>
+          <div className={styles.relatedGrid}>
+            {relatedProducts.map((relatedProduct) => (
+              <ProductCard
+                key={relatedProduct.id}
+                images={relatedProduct.images}
+                title={relatedProduct.title}
+                description={relatedProduct.description}
+                category={relatedProduct.category}
+                price={relatedProduct.price}
+                onClick={() => navigate(`/product/${relatedProduct.id}`)}
+                actionSlot={<Button>Add to Cart</Button>}
+              />
+            ))}
+          </div>
+        </div>
+      )}
     </div>
   );
 });

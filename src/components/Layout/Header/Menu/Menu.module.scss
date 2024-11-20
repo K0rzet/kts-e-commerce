@@ -1,0 +1,54 @@
+@use "@/styles/variables.scss" as *;
+
+.menuContainer {
+  display: flex;
+  max-width: 1240px;
+  width: 100%;
+  margin: 0 auto;
+  justify-content: space-between;
+
+  .menu {
+    display: flex;
+    gap: calc($space-xl * 2);
+    list-style: none;
+    align-items: center;
+  }
+
+  .menuIcons {
+    display: flex;
+    align-items: center;
+    gap: $space-xl;
+
+    .menuIconLink {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      gap: $space-xxs;
+      text-decoration: none;
+      color: $text-primary;
+      transition: color 0.3s ease-in;
+      font-size: 12px;
+      &:active,
+      &:hover {
+        color: $brand-hover;
+        svg {
+          color: $brand-hover;
+        }
+      }
+    }
+
+    svg {
+      color: $text-primary;
+      transition: color 0.3s ease-in;
+      &:active,
+      &:hover {
+        color: $brand-hover;
+      }
+    }
+
+    .active > svg {
+      color: $brand-active;
+    }
+  }
+}

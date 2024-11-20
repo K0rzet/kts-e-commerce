@@ -1,4 +1,4 @@
-@use "../../styles/variables.scss" as *;
+@use "@/styles/variables.scss" as *;
 
 .container {
   max-width: 1300px;
@@ -31,4 +31,18 @@
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
+}
+
+.relatedProducts {
+  margin-top: calc($space-xl * 2);
+}
+
+.relatedTitle {
+  margin-bottom: 32px;
+}
+
+.relatedGrid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 79px;
 }

@@ -8,6 +8,7 @@ export class ProductStore implements ILocalStore {
   isLoading: boolean = false;
   error: string | null = null;
   currentImageIndex: number = 0;
+  relatedProducts: IProduct[] = [];
 
   constructor() {
     makeAutoObservable(this, {
@@ -15,15 +16,15 @@ export class ProductStore implements ILocalStore {
       handlePrevImage: action,
       handleNextImage: action,
       fetchProduct: action,
+      fetchRelatedItems: action,
     });
   }
-
 
   destroy(): void {
     this.product = null;
     this.currentImageIndex = 0;
     this.error = null;
-  };
+  }
 
   setCurrentImageIndex = (index: number) => {
     runInAction(() => {
@@ -34,43 +35,64 @@ export class ProductStore implements ILocalStore {
   handlePrevImage = () => {
     if (!this.product?.images.length) return;
     runInAction(() => {
-      this.currentImageIndex = this.currentImageIndex === 0 
-        ? (this.product!.images.length - 1) 
-        : this.currentImageIndex - 1;
+      this.currentImageIndex =
+        this.currentImageIndex === 0 ? this.product!.images.length - 1 : this.currentImageIndex - 1;
     });
   };
 
   handleNextImage = () => {
     if (!this.product?.images.length) return;
     runInAction(() => {
-      this.currentImageIndex = this.currentImageIndex === (this.product!.images.length - 1)
-        ? 0 
-        : this.currentImageIndex + 1;
+      this.currentImageIndex =
+        this.currentImageIndex === this.product!.images.length - 1 ? 0 : this.currentImageIndex + 1;
     });
   };
 
   async fetchProduct(id: number) {
     if (this.product?.id === id) return;
-    
+
     this.isLoading = true;
     this.error = null;
-    
+
     try {
       const response = await productsService.getProduct(id);
-      
-      const parsedImages = response.data.images.map(img => {
-        try {
-          return JSON.parse(img);
-        } catch {
-          return img;
-        }
-      }).flat();
+
+      const parsedImages = response.data.images
+        .map((img) => {
+          try {
+            return JSON.parse(img);
+          } catch {
+            return img;
+          }
+        })
+        .flat();
 
       runInAction(() => {
         this.product = {
           ...response.data,
-          images: parsedImages
+          images: parsedImages,
         };
+      });
+    } catch (error) {
+      runInAction(() => {
+        this.error = (error as Error).message;
+      });
+    } finally {
+      runInAction(() => {
+        this.isLoading = false;
+      });
+    }
+  }
+  async fetchRelatedItems(categoryId: number) {
+    try {
+      const response = await productsService.getProducts({
+        limit: 3,
+        offset: 0,
+        categoryId,
+      });
+
+      runInAction(() => {
+        this.relatedProducts = response.data.products;
       });
     } catch (error) {
       runInAction(() => {

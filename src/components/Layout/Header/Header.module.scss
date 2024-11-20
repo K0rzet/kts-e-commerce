@@ -1,0 +1,8 @@
+@use "@/styles/variables.scss" as *;
+
+.header {
+  box-sizing: border-box;
+  background-color: $color-white;
+  padding: $space-l 0;
+  box-shadow: $header-shadow;
+}
