@@ -8,6 +8,7 @@
   &_tag {
     &_h2 {
       font-size: 32px;
+      line-height: 36px;
     }
     &_h1 {
       font-size: 44px;
@@ -18,7 +19,6 @@
     &_title {
       width: 336px;
       font-weight: 500;
-      line-height: 24px;
       color: $text-primary;
       display: -webkit-box;
       -webkit-box-orient: vertical;

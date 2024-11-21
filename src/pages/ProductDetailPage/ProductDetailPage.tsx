@@ -76,6 +76,7 @@ const ProductDetailPage = observer(() => {
           <div className={styles.relatedGrid}>
             {relatedProducts.map((relatedProduct) => (
               <ProductCard
+                productId={relatedProduct.id}
                 key={relatedProduct.id}
                 images={relatedProduct.images}
                 title={relatedProduct.title}

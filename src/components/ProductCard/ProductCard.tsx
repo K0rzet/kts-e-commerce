@@ -3,6 +3,8 @@ import * as styles from './ProductCard.module.scss';
 import Text from '@/components/Text';
 import classNames from 'classnames';
 import { ICategory } from '@/types/category.types';
+import { useRootStore } from '@/store/RootStoreContext';
+import QuantityButton from '@/components/QuantityButton';
 
 export type CardProps = {
   /** Дополнительный classname */
@@ -21,6 +23,7 @@ export type CardProps = {
   onClick?: React.MouseEventHandler;
   /** Слот для действия */
   actionSlot?: React.ReactNode;
+  productId: number;
 };
 
 const ProductCard: React.FC<CardProps> = React.memo(({
@@ -30,9 +33,13 @@ const ProductCard: React.FC<CardProps> = React.memo(({
   description,
   category,
   price,
-  actionSlot,
+  productId,
   onClick,
+  actionSlot,
 }) => {
+  const { cartStore } = useRootStore();
+  const cartItem = cartStore.items.find(item => item.product.id === productId);
+
   return (
     <div
       className={classNames(styles.productCard, className)}
@@ -85,15 +92,21 @@ const ProductCard: React.FC<CardProps> = React.memo(({
         {price && (
           <Text
             view="p-18"
-              weight="bold"
-              color="primary"
-              tag="div"
-              className={styles.contentText}
-            >
-              {price}$
+            weight="bold"
+            color="primary"
+            tag="div"
+            className={styles.contentText}
+          >
+            {price}$
           </Text>
         )}
-        {actionSlot && <div className={styles.action}>{actionSlot}</div>}
+        <div className={styles.action}>
+          {cartItem ? (
+            <QuantityButton productId={productId} />
+          ) : (
+            actionSlot
+          )}
+        </div>
       </div>
     </div>
   );

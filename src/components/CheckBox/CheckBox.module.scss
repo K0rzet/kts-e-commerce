@@ -1,0 +1,68 @@
+@use '@/styles/variables.scss' as *;
+
+.container {
+  display: inline-block;
+  position: relative;
+  cursor: pointer;
+
+  &[data-disabled="true"] {
+    cursor: default;
+  }
+}
+
+.input {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+  height: 0;
+  width: 0;
+}
+
+.checkbox {
+  width: 40px;
+  height: 40px;
+  background-color: $input-bg;
+  border: 1px solid $checkbox-border;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+}
+
+.container:not([data-disabled="true"]):hover .input + .checkbox {
+  background-color: $input-bg-focus;
+  border-color: $checkbox-border-hover;
+}
+
+.input:checked + .checkbox {
+  border-color: $checkbox-check;
+
+  .checkIcon {
+    color: $checkbox-check;
+  }
+}
+
+.container[data-disabled="true"] {
+  .checkbox {
+    background-color: $checkbox-check-disabled;
+    border-color: $checkbox-border-disabled;
+  }
+
+  .input:checked + .checkbox .checkIcon {
+    color: $checkbox-check-disabled-color;
+  }
+}
+
+.container:not([data-disabled="true"]):hover {
+  .input:checked + .checkbox {
+    border-color: $checkbox-check-hover;
+  
+    .checkIcon {
+      color: $checkbox-check-hover;
+    }
+  }
+}
+
+.checkIcon {
+  color: currentColor;
+} 

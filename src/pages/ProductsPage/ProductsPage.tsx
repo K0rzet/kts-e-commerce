@@ -120,6 +120,7 @@ const ProductsPage: React.FC = observer(() => {
       <div className={styles.products}>
         {products.map((product) => (
           <ProductCard
+            productId={product.id}
             key={product.id}
             onClick={() => navigate(`/product/${product.id}`)}
             {...product}

@@ -1,11 +1,22 @@
+@use "@/styles/variables.scss" as *;
+
 .cartWrapper {
-  padding: 24px;
-  max-width: 1200px;
+  padding: $space-xl;
+  max-width: 1240px;
   margin: 0 auto;
   min-height: calc(100vh - 80px);
   display: flex;
   flex-direction: column;
   gap: 24px;
+  box-sizing: border-box;
+
+
+  .cartContent {
+    display: flex;
+    gap: $space-xl;
+    justify-content: space-between;
+    width: 100%;
+  }
 }
 
 .empty {
@@ -17,9 +28,10 @@
 }
 
 .products {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-  gap: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: $space-xl;
+
 }
 
 .actions {
@@ -44,11 +56,19 @@
 }
 
 .total {
-  margin-top: auto;
-  padding-top: 24px;
-  border-top: 1px solid #e0e0e0;
   display: flex;
-  justify-content: flex-end;
+  max-width: 300px;
+  width: 100%;
+  padding: $space-xl;
+  box-sizing: border-box;
+  background: $color-white;
+  height: fit-content;
+  flex-direction: column;
+  gap: $space-xs;
+  .totalPrice {
+    display: flex;
+    justify-content: space-between;
+  }
 }
 
 .productsCount {
@@ -69,4 +89,19 @@
     flex-wrap: wrap;
     justify-content: center;
   }
+}
+
+.cartHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid $input-border;
+  box-sizing: border-box;
+  width: 100%;
+}
+
+.selectAll {
+  display: flex;
+  align-items: center;
+  gap: $space-m;
 }
