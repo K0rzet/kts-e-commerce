@@ -70,7 +70,7 @@ export class OrderStore implements ILocalStore {
       }
 
       const script = document.createElement('script');
-      script.src = 'https://yookassa.ru/checkout-widget/v3/checkout-widget.js';
+      script.src = 'https://static.yoomoney.ru/checkout-client/checkout-widget.js';
       script.async = true;
       script.crossOrigin = 'anonymous';
 
