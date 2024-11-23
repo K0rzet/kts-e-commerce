@@ -11,16 +11,22 @@ import { ProductStore } from '@/store/ProductStore';
 import React from 'react';
 import ProductCard from '@/components/ProductCard';
 import Button from '@/components/Button';
+import { useRootStore } from '@/store/RootStoreContext';
 
 const ProductDetailPage = observer(() => {
   const productStore = useLocalStore(() => new ProductStore());
   const { id } = useParams();
   const navigate = useNavigate();
+  const { viewedProductsStore } = useRootStore();
 
   const { product, relatedProducts } = productStore;
 
   const categoryId = product?.category.id;
-
+  useEffect(() => {
+    if (productStore.product) {
+      viewedProductsStore.addProduct(productStore.product);
+    }
+  }, [productStore.product, viewedProductsStore]);
   useEffect(() => {
     if (categoryId) {
       productStore.fetchRelatedItems(categoryId);

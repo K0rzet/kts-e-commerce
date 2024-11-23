@@ -4,7 +4,7 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "dev": "cross-env NODE_ENV=development npx webpack serve --mode=development",
+    "dev": "cross-env NODE_ENV=development npx webpack serve --mode=development --host 0.0.0.0",
     "build": "cross-env NODE_ENV=production npx webpack --mode=production",
     "lint": "eslint \"./src/**/*.{js,jsx,ts,tsx}\"",
     "lint:fix": "eslint \"./src/**/*.{js,jsx,ts,tsx}\" --fix"

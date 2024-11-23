@@ -24,7 +24,7 @@ const SearchInput: React.FC = () => {
   return (
     <div className={styles.searchContainer}>
       <Input value={inputValue} onChange={setInputValue} placeholder="Search products..." />
-      <Button onClick={handleSearch}>Find now</Button>
+      <Button onClick={handleSearch} className={styles.searchButton}>Find now</Button>
     </div>
   );
 };

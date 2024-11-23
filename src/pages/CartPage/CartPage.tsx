@@ -6,16 +6,21 @@ import { useRootStore } from '@/store/RootStoreContext';
 import CartItemComponent from './components/CartItem';
 import Button from '@/components/Button';
 import CheckBox from '@/components/CheckBox';
+import { useNavigate } from 'react-router-dom';
 
 const CartPage: React.FC = observer(() => {
   const { cartStore } = useRootStore();
-
+  const navigate = useNavigate();
+  const handleNavigateToCatalog = () => {
+    navigate('/products');
+  };
   if (cartStore.items.length === 0) {
     return (
       <div className={styles.empty}>
         <Text tag="h2" view="title" weight="bold">
           Your cart is empty
         </Text>
+        <Button onClick={handleNavigateToCatalog} className={styles.goToCatalogButton}>Go to catalog</Button>
       </div>
     );
   }
@@ -28,29 +33,24 @@ const CartPage: React.FC = observer(() => {
     cartStore.removeSelectedItems();
   };
 
+  const handleOrderPlacement = () => {
+    navigate('/order');
+  };
+
   return (
     <div className={styles.cartWrapper}>
       <Text tag="h2" view="title" weight="bold">
         Shopping Cart
       </Text>
-        <div className={styles.cartHeader}>
-          <div className={styles.selectAll}>
-            <CheckBox
-              checked={cartStore.areAllItemsSelected}
-              onChange={handleSelectAll}
-            />
-            <Text view="p-16" color="secondary">
-              Select All
-            </Text>
-          </div>
-          {cartStore.selectedItems.length > 0 && (
-            <Button
-              onClick={handleRemoveSelected}
-            >
-              Delete Selected
-            </Button>
-          )}
+      <div className={styles.cartHeader}>
+        <div className={styles.selectAll}>
+          <CheckBox checked={cartStore.areAllItemsSelected} onChange={handleSelectAll} />
+          <Text view="p-16" color="secondary">
+            Select All
+          </Text>
         </div>
+        {cartStore.selectedItems.length > 0 && <Button onClick={handleRemoveSelected}>Delete Selected</Button>}
+      </div>
       <div className={styles.cartContent}>
         <div className={styles.products}>
           {cartStore.items.map((item) => (
@@ -76,8 +76,11 @@ const CartPage: React.FC = observer(() => {
               ${cartStore.totalSelectedPrice.toFixed(2)}
             </Text>
           </div>
-          <Button>
-            Оrder placement
+          <Button 
+            onClick={handleOrderPlacement}
+            disabled={cartStore.selectedItems.length === 0}
+          >
+            Order placement
           </Button>
         </div>
       </div>

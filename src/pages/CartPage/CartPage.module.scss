@@ -25,6 +25,8 @@
   justify-content: center;
   min-height: calc(100vh - 80px);
   text-align: center;
+  flex-direction: column;
+  gap: $space-xl;
 }
 
 .products {
@@ -32,6 +34,10 @@
   flex-direction: column;
   gap: $space-xl;
 
+}
+
+.goToCatalogButton {
+  color: $text-white;
 }
 
 .actions {

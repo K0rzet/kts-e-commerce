@@ -1,30 +1,65 @@
-.wrapper {
+@use "@/styles/variables" as *;
+.profileWrapper {
   min-height: calc(100vh - 90px);
   display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 20px;
+  flex-direction: column;
+  max-width: 1240px;
+  width: 100%;
+  margin: 0 auto;
+  align-items: space-between;
+  overflow-x: hidden;
+  box-sizing: border-box;
 }
 
-.content {
-  background: white;
-  border-radius: 12px;
-  padding: 32px;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
-  width: 100%;
-  max-width: 480px;
+.profileContent {
   display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 24px;
+  gap: $space-l;
+
+  .profileSections {
+    display: flex;
+    flex-direction: column;
+    gap: $space-m;
+  }
+
+  .profileInfo {
+    background: white;
+    border-radius: 12px;
+    padding: $space-m;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+    max-width: 300px;
+    box-sizing: border-box;
+    width: 100%;
+    height: 300px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: $space-m;
+
+    .logoutButton {
+      background-color: $color-white;
+      border: 1px solid $color-red;
+      color: $text-primary;
+
+      .text {
+        color: $text-primary;
+        :hover {
+          background-color: $color-white;
+        }
+      }
+      &:hover {
+        background-color: $color-white !important;
+        color: $color-red;
+      }
+    }
+  }
 }
 
 .avatar {
   width: 120px;
   height: 120px;
-  border-radius: 50%;
   overflow: hidden;
-  
+  border: 1px solid $text-secondary;
+
   img {
     width: 100%;
     height: 100%;
@@ -33,13 +68,14 @@
 }
 
 .info {
-  text-align: center;
+  display: flex;
+  flex-direction: column;
+  gap: $space-m;
 }
 
 .name {
   font-size: 24px;
   font-weight: 600;
-  margin-bottom: 8px;
 }
 
 .email {
@@ -47,11 +83,51 @@
   font-size: 16px;
 }
 
-.logoutButton {
-  margin-top: 16px;
-  background-color: #ff4d4d;
-  
-  &:hover {
-    background-color: #ff3333;
+.viewedProductsContainer {
+  max-width: 920px;
+  width: 100%;
+  overflow-x: hidden;
+
+  .viewedProducts {
+    // max-width: 920px;
+    // width: 100%;
+    display: flex;
+    gap: $space-m;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scroll-behavior: smooth;
+    padding-bottom: $space-m;
+    overscroll-behavior-y: contain;
+    flex-wrap: nowrap;
+
+    scrollbar-width: thin;
+    scrollbar-color: $brand transparent;
+
+    &::-webkit-scrollbar {
+      height: 6px;
+      width: 6px;
+    }
+
+    &::-webkit-scrollbar-track {
+      background: rgba($brand, 0.1);
+      border-radius: 8px;
+    }
+
+    &::-webkit-scrollbar-thumb {
+      background: $brand;
+      border-radius: 8px;
+
+      &:hover {
+        background: $brand-hover;
+      }
+
+      &:active {
+        background: $brand-active;
+      }
+    }
+
+    & > * {
+      scroll-snap-align: start;
+    }
   }
 }

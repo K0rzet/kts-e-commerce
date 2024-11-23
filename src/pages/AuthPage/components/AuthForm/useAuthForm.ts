@@ -23,8 +23,8 @@ export const useAuthForm = (isLogin: boolean) => {
       if (!hasLocalCart) return
 
       await cartStore.syncLocalCartWithServer()
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     } catch (error) {
-      console.error('Failed to sync cart:', error)
       
       const retrySync = window.confirm(
         'Failed to sync your cart. Would you like to try again?'

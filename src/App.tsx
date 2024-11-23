@@ -11,6 +11,9 @@ import AuthPage from './pages/AuthPage';
 import SocialAuthPage from './pages/SocialAuthPage';
 import RedirectIfAuth from './pages/RedirectIfAuth';
 import ProfilePage from './pages/ProfilePage';
+import OrderPage from '@/pages/OrderPage';
+import PaymentPage from '@/pages/PaymentPage/PaymentPage';
+import ThanksPage from '@/pages/ThanksPage/ThanksPage';
 
 function App() {
   return (
@@ -27,6 +30,9 @@ function App() {
               <Route path="/social-auth" element={<SocialAuthPage />} />
             </Route>
             <Route path="/profile" element={<ProfilePage />} />
+            <Route path="/order" element={<OrderPage />} />
+            <Route path="/payment/:token" element={<PaymentPage />} />
+            <Route path="/thanks" element={<ThanksPage />} />
             <Route path="*" element={<Navigate to="/products" replace />} />
           </Routes>
         </Layout>

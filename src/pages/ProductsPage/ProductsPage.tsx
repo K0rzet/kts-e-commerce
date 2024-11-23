@@ -124,7 +124,7 @@ const ProductsPage: React.FC = observer(() => {
             key={product.id}
             onClick={() => navigate(`/product/${product.id}`)}
             {...product}
-            actionSlot={<Button onClick={getAddToCartHandler(product.id)}>{addedProducts[product.id] ? 'Added to Cart' : 'Add to Cart'}</Button>}
+            actionSlot={<Button onClick={getAddToCartHandler(product.id)} className={styles.addToCartButton}>{addedProducts[product.id] ? 'Added to Cart' : 'Add to Cart'}</Button>}
           />
         ))}
       </div>

@@ -68,7 +68,7 @@ export default {
         use: getSettingsForStyles(false),
       },
       {
-        test: /\.(png|svg|jpg)$/,
+        test: /\.(png|svg|jpg|jpeg)$/,
         type: 'asset',
         parser: {
           dataUrlCondition: {
@@ -76,6 +76,10 @@ export default {
           },
         },
       },
+      // {
+      //   test: /\.(png|jpg|jpeg|gif)$/i,
+      //   type: 'asset/resource'
+      // }
     ],
   },
   devServer: {

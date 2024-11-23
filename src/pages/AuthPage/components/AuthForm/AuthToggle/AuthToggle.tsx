@@ -1,6 +1,7 @@
 import Button from '@/components/Button'
 import React from 'react'
 import { useNavigate } from 'react-router-dom'
+import * as styles from './AuthForm.module.scss'
 
 export function AuthToggle({ isLogin }: { isLogin: boolean }) {
 	const navigate = useNavigate();
@@ -15,6 +16,7 @@ export function AuthToggle({ isLogin }: { isLogin: boolean }) {
 					<Button
 						type="button"
 						onClick={handleRegister}
+						className={styles.authToggleButton}
 					>
 						Зарегистрироваться
 					</Button>
@@ -25,6 +27,7 @@ export function AuthToggle({ isLogin }: { isLogin: boolean }) {
 					<Button
 						type="button"
 						onClick={handleLogin}
+						className={styles.authToggleButton}
 					>
 						Войти
 					</Button>

@@ -1,8 +1,8 @@
 import { observer } from 'mobx-react-lite';
 import React from 'react'
 import { useRootStore } from '@/store/RootStoreContext' 
-import UserIcon from '../Layout/Header/components/UserIcon';
-
+import defaultAvatar from '@/assets/images/default-avatar.jpeg';
+import * as styles from './UserAvatar.module.scss';
 const UserAvatar = observer(() => {
   const { userStore } = useRootStore();
   
@@ -13,16 +13,14 @@ const UserAvatar = observer(() => {
   }, [userStore]);
 
   return (
-    <div className="w-8 h-8 rounded-full overflow-hidden">
-      {userStore.user?.avatarPath ? (
+    <div className={styles.userAvatar}>
+      
         <img 
-          src={userStore.user.avatarPath}
+          src={userStore.user?.avatarPath ? userStore.user.avatarPath : defaultAvatar}
           alt="User avatar"
-          className="w-full h-full object-cover"
+          className={styles.userAvatarImage}
         />
-      ) : (
-        <UserIcon />
-      )}
+      
     </div>
   )
 });

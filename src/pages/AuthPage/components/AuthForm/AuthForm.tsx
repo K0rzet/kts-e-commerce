@@ -3,9 +3,9 @@ import Button from '@/components/Button';
 import Input from '@/components/Input';
 import * as styles from './AuthForm.module.scss';
 import React from 'react';
-import { AuthToggle } from './AuthToggle';
+import { AuthToggle } from '../AuthToggle/AuthToggle';
 import { useAuthForm } from './useAuthForm';
-import { SocialMediaButtons } from './SocialMediaButtons';
+import { SocialMediaButtons } from '../SocialMediaButtons/SocialMediaButtons';
 import { Controller } from 'react-hook-form';
 
 interface AuthFormProps {
@@ -67,6 +67,7 @@ const AuthForm = ({ isLogin }: AuthFormProps) => {
           type="submit"
           loading={isLoading}
           disabled={isLoading}
+          className={styles.authButton}
         >
           {isLogin ? 'Войти' : 'Зарегистрироваться'}
         </Button>
