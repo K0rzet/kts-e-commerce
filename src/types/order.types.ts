@@ -11,7 +11,7 @@ export interface CreateOrderResponse {
 }
 
 export interface CreateOrderDTO {
-  cartItemIds: number[];
+  items: number[];
   email?: string;
   city: string;
   house: string;

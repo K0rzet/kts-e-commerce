@@ -38,16 +38,16 @@ export class OrderStore implements ILocalStore {
       
       const response = await orderService.createOrder(orderDataWithEmail, isAuthenticated);
 
-      if (!response.orderId || !response.confirmationToken) {
+      if (!response.confirmation.confirmation_url) {
         throw new Error('Invalid response from server');
       }
 
       runInAction(() => {
-        this.confirmationToken = response.confirmationToken;
-        this.orderId = response.orderId;
+        this.confirmationToken = response.confirmation.confirmation_url;
+        // this.orderId = response.orderId;
       });
 
-      await this.initYooKassaWidget();
+      window.location.href = response.confirmation.confirmation_url;
 
     } catch (error: unknown) {
       console.error('Error creating order:', error);

@@ -37,7 +37,7 @@ const OrderForm: React.FC = observer(() => {
 
       const orderData = {
         ...data,
-        cartItemIds: cartStore.selectedItems.map(item => item.id)
+        items: cartStore.selectedItems.map(item => item.id)
       };
 
       await orderStore.createOrder(orderData);

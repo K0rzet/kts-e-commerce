@@ -3,8 +3,10 @@ import { CreateOrderDTO } from '@/types/order.types';
 import axios from 'axios';
 
 interface OrderResponse {
-  orderId: string;
-  confirmationToken: string;
+  // orderId: string;
+  confirmation: {
+    confirmation_url: string;
+  };
 }
 
 interface ErrorResponse {
@@ -16,36 +18,36 @@ interface ErrorResponse {
 class OrderService {
   async createOrder(data: CreateOrderDTO, isAuthenticated: boolean): Promise<OrderResponse> {
     const axiosInstance = isAuthenticated ? instance : axiosClassic;
-    const endpoint = isAuthenticated ? '/orders/auth' : '/orders';
-    
+    const endpoint = isAuthenticated ? '/payment/checkout' : '/orders';
+
     try {
       console.log('Creating order with data:', {
         ...data,
-        cartItemIds: data.cartItemIds
+        items: data.items,
       });
-      
+
       const response = await axiosInstance.post<OrderResponse>(endpoint, data);
       console.log('Order creation response:', response.data);
-      
-      if (!response.data.orderId || !response.data.confirmationToken) {
+
+      if (!response.data.confirmation.confirmation_url) {
         throw new Error('Invalid response from server');
       }
-      
+
       return response.data;
     } catch (error) {
       console.error('Error in createOrder:', error);
-      
+
       if (axios.isAxiosError(error)) {
         const errorData = error.response?.data as ErrorResponse;
-        
+
         console.error('Server error details:', {
           status: error.response?.status,
           data: errorData,
           config: {
             url: error.config?.url,
             method: error.config?.method,
-            data: error.config?.data
-          }
+            data: error.config?.data,
+          },
         });
 
         // Проверяем наличие сообщения об ошибке от сервера
@@ -67,10 +69,10 @@ class OrderService {
             throw new Error(`Order creation failed: ${error.message}`);
         }
       }
-      
-      throw new Error('Failed to create order. Please try again.');
+
+      throw new Error(`Failed to create order. Please try again: ${error}`);
     }
   }
 }
 
-export default new OrderService(); 
+export default new OrderService();
