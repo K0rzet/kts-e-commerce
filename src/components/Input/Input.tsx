@@ -7,6 +7,7 @@ export type InputProps = Omit<
 > & {
   /** Значение поля */
   value: string;
+  type?: string
   /** Callback, вызываемый при вводе данных в поле */
   onChange: (value: string) => void;
   /** Слот для иконки справа */
@@ -14,7 +15,7 @@ export type InputProps = Omit<
 };
 
 const Input = React.forwardRef<HTMLInputElement, InputProps>(
-  ({ value, onChange, afterSlot, disabled, className, ...props }, ref) => {
+  ({ value, onChange, afterSlot, disabled, className, type, ...props }, ref) => {
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
       onChange(e.target.value);
     };
@@ -26,7 +27,7 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
       >
         <input
           {...props}
-          type="text"
+          type={type ? type : 'text'}
           ref={ref}
           value={value}
           onChange={handleChange}
