@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { observer } from 'mobx-react-lite';
 import { useRootStore } from '@/store/RootStoreContext';
 import Button from '@/components/Button/Button';
@@ -8,17 +8,30 @@ import Text from '@/components/Text';
 import defaultAvatar from '@/assets/images/default-avatar.jpeg';
 import ProductCard from '@/components/ProductCard';
 import { useHorizontalScroll } from '@/hooks/useHorizontalScroll';
+import { useLocalStore } from '@/hooks/useLocalStore';
+import { ProfileStore } from '@/store/ProfileStore';
+import { useMeta } from '@/context/MetaContext';
 
 const ProfilePage = observer(() => {
   const { userStore, viewedProductsStore } = useRootStore();
+  const profileStore = useLocalStore(() => new ProfileStore());
   const navigate = useNavigate();
   const scrollContainerRef = useRef<HTMLDivElement>(null);
+  const { orders } = profileStore;
+  const { setTitle } = useMeta();
+  useEffect(() => {
+    setTitle('Profile');
+  }, [setTitle]);
   useHorizontalScroll(scrollContainerRef);
 
   const handleLogout = () => {
     userStore.logout();
     navigate('/auth');
   };
+
+  useEffect(() => {
+    profileStore.fetchOrders();
+  }, [profileStore]);
 
   return (
     <div className={styles.profileWrapper}>
@@ -42,7 +55,22 @@ const ProfilePage = observer(() => {
           </Button>
         </div>
         <div className={styles.profileSections}>
-          <h2>Past orders</h2>
+          {userStore.user && (
+            <div className="">
+              <h2>Past Orders</h2>
+              {orders.length > 0 ? (
+                orders.map((order) => (
+                  <div key={order.id}>
+                    <p>Order ID: {order.id}</p>
+                    <p>Total: {order.total}</p>
+                    <p>Status: {order.status}</p>
+                  </div>
+                ))
+              ) : (
+                <p>No past orders found.</p>
+              )}
+            </div>
+          )}
           <h2>You watched</h2>
           <div className={styles.viewedProductsContainer}>
             <div className={styles.viewedProducts} ref={scrollContainerRef}>

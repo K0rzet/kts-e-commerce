@@ -1,4 +1,4 @@
-@use '@/styles/variables.scss' as *;
+@use "@/styles/variables.scss" as *;
 .form {
   max-width: 500px;
   margin: 0 auto;
@@ -16,7 +16,20 @@
     font-size: 12px;
   }
 }
-
+.confirmButton {
+  color: $text-white;
+}
+.unauthUser {
+  max-width: 400px;
+  width: 100%;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: $space-m;
+  > button {
+    color: white;
+  }
+}
 .summary {
   margin: 20px 0;
   padding: 15px;
@@ -64,4 +77,4 @@
   &.visible {
     display: block;
   }
-} 
+}

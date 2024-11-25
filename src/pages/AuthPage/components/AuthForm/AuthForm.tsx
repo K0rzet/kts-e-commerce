@@ -7,6 +7,7 @@ import { AuthToggle } from '../AuthToggle/AuthToggle';
 import { useAuthForm } from './useAuthForm';
 import { SocialMediaButtons } from '../SocialMediaButtons/SocialMediaButtons';
 import { Controller } from 'react-hook-form';
+import Text from '@/components/Text';
 
 interface AuthFormProps {
   isLogin: boolean;
@@ -16,63 +17,48 @@ const AuthForm = ({ isLogin }: AuthFormProps) => {
   const { handleSubmit, isLoading, onSubmit, recaptchaRef, control } = useAuthForm(isLogin);
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)}>
-      <div>
+    <form onSubmit={handleSubmit(onSubmit)} className={styles.authForm}>
+      <Text view="title" tag="h1" weight="bold" className={styles.title}>
+        {isLogin ? 'Login' : 'Register'}
+      </Text>
+      <div className={styles.inputGroup}>
         <label>
-          Email
+          <Text view="p-18" weight="bold">
+            Email
+          </Text>
           <Controller
             name="email"
             control={control}
             defaultValue=""
             render={({ field }) => (
-              <Input
-                type="email"
-                placeholder="Enter email: "
-                value={field.value}
-                onChange={field.onChange}
-              />
+              <Input type="email" placeholder="Enter email: " value={field.value} onChange={field.onChange} />
             )}
           />
         </label>
-      </div>
 
-      <div>
         <label>
-          Password
+          <Text view="p-18" weight="bold">
+            Password
+          </Text>
           <Controller
             name="password"
             control={control}
             defaultValue=""
             render={({ field }) => (
-              <Input
-                type="password"
-                placeholder="Enter password: "
-                value={field.value}
-                onChange={field.onChange}
-              />
+              <Input type="password" placeholder="Enter password: " value={field.value} onChange={field.onChange} />
             )}
           />
         </label>
-      </div>
-      
-      <ReCAPTCHA
-        ref={recaptchaRef}
-        size="normal"
-        sitekey={process.env.RECAPTCHA_SITE_KEY as string}
-        theme="light"
-      />
-
-      <div>
-        <Button
-          type="submit"
-          loading={isLoading}
-          disabled={isLoading}
-          className={styles.authButton}
-        >
-          {isLogin ? 'Войти' : 'Зарегистрироваться'}
-        </Button>
+        <ReCAPTCHA ref={recaptchaRef} size="normal" sitekey={process.env.RECAPTCHA_SITE_KEY as string} theme="light" />
       </div>
 
+      <Button className={styles.submitButton} type="submit" loading={isLoading} disabled={isLoading}>
+        {isLogin ? 'Login' : 'Register'}
+      </Button>
+
+      <Text view="p-18" weight="bold" className={styles.socialMedia}>
+        Or you can continue with Google
+      </Text>
       <SocialMediaButtons />
 
       <AuthToggle isLogin={isLogin} />

@@ -12,6 +12,7 @@ import React from 'react';
 import ProductCard from '@/components/ProductCard';
 import Button from '@/components/Button';
 import { useRootStore } from '@/store/RootStoreContext';
+import { useMeta } from '@/context/MetaContext';
 
 const ProductDetailPage = observer(() => {
   const productStore = useLocalStore(() => new ProductStore());
@@ -20,7 +21,10 @@ const ProductDetailPage = observer(() => {
   const { viewedProductsStore } = useRootStore();
 
   const { product, relatedProducts } = productStore;
-
+  const { setTitle } = useMeta();
+  useEffect(() => {
+    setTitle(product ? product?.title : '');
+  }, [product, product?.title, setTitle]);
   const categoryId = product?.category.id;
   useEffect(() => {
     if (productStore.product) {

@@ -1,37 +1,29 @@
-import Button from '@/components/Button'
-import React from 'react'
-import { useNavigate } from 'react-router-dom'
-import * as styles from './AuthToggle.module.scss'
+import React from 'react';
+import { Link } from 'react-router-dom';
+import * as styles from './AuthToggle.module.scss';
+import Text from '@/components/Text';
 export function AuthToggle({ isLogin }: { isLogin: boolean }) {
-	const navigate = useNavigate();
-	const handleRegister = () => navigate('/register');
-	const handleLogin = () => navigate('/login');
-
-	return (
-		<div className="text-center text-base mt-3">
-			{isLogin ? (
-				<p>
-					Нет аккаунта?{' '}
-					<Button
-						type="button"
-						onClick={handleRegister}
-						className={styles.authToggleButton}
-					>
-						Зарегистрироваться
-					</Button>
-				</p>
-			) : (
-				<p>
-					Уже есть аккаунт?{' '}
-					<Button
-						type="button"
-						onClick={handleLogin}
-						className={styles.authToggleButton}
-					>
-						Войти
-					</Button>
-				</p>
-			)}
-		</div>
-	)
+  return (
+    <div className="text-center text-base mt-3">
+      {isLogin ? (
+        <p>
+          Don't have an account?
+          <Link className={styles.authToggleLink} to={'/register'}>
+            <Text weight={'bold'} view="p-18">
+              Register
+            </Text>
+          </Link>
+        </p>
+      ) : (
+        <p>
+          Already have an account?{' '}
+          <Link className={styles.authToggleLink} to={'/login'}>
+            <Text weight={'bold'} view="p-18">
+              Login
+            </Text>
+          </Link>
+        </p>
+      )}
+    </div>
+  );
 }

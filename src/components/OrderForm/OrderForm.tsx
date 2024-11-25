@@ -9,11 +9,12 @@ import Text from '@/components/Text';
 import { OrderFormData } from '@/types/order.types';
 import * as styles from './OrderForm.module.scss';
 import { useLocalStore } from '@/hooks/useLocalStore';
+import { useNavigate } from 'react-router-dom';
 
 const OrderForm: React.FC = observer(() => {
   const { cartStore, userStore } = useRootStore();
   const orderStore = useLocalStore(() => new OrderStore());
-  
+  const navigate = useNavigate()
   const { control, handleSubmit, formState: { errors } } = useForm<OrderFormData>({
     defaultValues: {
       email: userStore.user?.email || '',
@@ -29,8 +30,10 @@ const OrderForm: React.FC = observer(() => {
     };
   }, [orderStore]);
 
+  const handleNavigateToAuthPage = async () => {
+    navigate('/login')
+  }
   const onSubmit = async (data: OrderFormData) => {
-    try {
       if (cartStore.selectedItems.length === 0) {
         throw new Error('Please select items to order');
       }
@@ -42,32 +45,14 @@ const OrderForm: React.FC = observer(() => {
 
       await orderStore.createOrder(orderData);
       
-    } catch (error) {
-      
-      let errorMessage = 'An error occurred while creating your order';
-      
-      if (error instanceof Error) {
-        switch (error.message) {
-          case 'No items selected':
-            errorMessage = 'Please select items to order';
-            break;
-          case 'Товары не найдены':
-            errorMessage = 'Selected items are not available';
-            break;
-          case 'Payment form initialization failed':
-            errorMessage = 'Payment system initialization failed. Please try again';
-            break;
-          case 'YooKassa initialization timeout':
-            errorMessage = 'Payment system is temporarily unavailable. Please try again later';
-            break;
-          default:
-            errorMessage = error.message || 'Failed to create order';
-        }
-      }
-      
-    //   orderStore.setError(errorMessage);
     }
-  };
+
+    if (!userStore.user) {
+      return <div className={styles.unauthUser}>
+        Sign up to make order
+        <Button onClick={handleNavigateToAuthPage}>Sign up</Button>
+      </div>
+    }
 
   return (
     <>
@@ -188,14 +173,11 @@ const OrderForm: React.FC = observer(() => {
           type="submit"
           disabled={cartStore.selectedItems.length === 0 || orderStore.isLoading}
           loading={orderStore.isLoading}
+          className={styles.confirmButton}
         >
           Confirm Order
         </Button>
       </form>
-      <div 
-        id="payment-form" 
-        className={styles.paymentForm}
-      />
     </>
   );
 });

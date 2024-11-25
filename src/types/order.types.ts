@@ -17,3 +17,10 @@ export interface CreateOrderDTO {
   house: string;
   apartment: string;
 } 
+
+export interface IOrder {
+  id: string;
+  status: string;
+  total: number;
+  email: string;
+}

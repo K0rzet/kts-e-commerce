@@ -16,6 +16,7 @@ import { useLocalStore } from '@/hooks/useLocalStore';
 import SearchInput from './components/SearchInput';
 import Titles from './components/Titles';
 import { useRootStore } from '@/store/RootStoreContext';
+import { useMeta } from '@/context/MetaContext';
 
 
 const ProductsPage: React.FC = observer(() => {
@@ -26,7 +27,10 @@ const ProductsPage: React.FC = observer(() => {
   const { products, isLoading, totalCount, currentPage, PAGE_LIMIT } = useProducts();
   const { categories } = categoryStore;
   const [addedProducts, setAddedProducts] = useState<Record<number, boolean>>({});
-
+  const { setTitle } = useMeta();
+  useEffect(() => {
+    setTitle('Products');
+  }, [setTitle]);
   useEffect(() => {
     if (categories.length === 0 && categoryStore.meta !== Meta.loading) {
       categoryStore.getCategories();

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { observer } from 'mobx-react-lite';
 import Text from '@/components/Text';
 import * as styles from './CartPage.module.scss';
@@ -7,6 +7,7 @@ import CartItemComponent from './components/CartItem';
 import Button from '@/components/Button';
 import CheckBox from '@/components/CheckBox';
 import { useNavigate } from 'react-router-dom';
+import { useMeta } from '@/context/MetaContext';
 
 const CartPage: React.FC = observer(() => {
   const { cartStore } = useRootStore();
@@ -14,13 +15,18 @@ const CartPage: React.FC = observer(() => {
   const handleNavigateToCatalog = () => {
     navigate('/products');
   };
+
+  const { setTitle } = useMeta();
+  useEffect(() => {
+    setTitle('Cart');
+  }, [setTitle]);
   if (cartStore.items.length === 0) {
     return (
       <div className={styles.empty}>
         <Text tag="h2" view="title" weight="bold">
           Your cart is empty
         </Text>
-        <Button onClick={handleNavigateToCatalog} className={styles.goToCatalogButton}>Go to catalog</Button>
+        <Button onClick={handleNavigateToCatalog} className={styles.cartButton}>Go to catalog</Button>
       </div>
     );
   }
@@ -49,7 +55,7 @@ const CartPage: React.FC = observer(() => {
             Select All
           </Text>
         </div>
-        {cartStore.selectedItems.length > 0 && <Button onClick={handleRemoveSelected}>Delete Selected</Button>}
+        {cartStore.selectedItems.length > 0 && <Button onClick={handleRemoveSelected} className={styles.cartButton}>Delete Selected</Button>}
       </div>
       <div className={styles.cartContent}>
         <div className={styles.products}>
@@ -76,9 +82,11 @@ const CartPage: React.FC = observer(() => {
               ${cartStore.totalSelectedPrice.toFixed(2)}
             </Text>
           </div>
+          
           <Button 
             onClick={handleOrderPlacement}
             disabled={cartStore.selectedItems.length === 0}
+            className={styles.cartButton}
           >
             Order placement
           </Button>

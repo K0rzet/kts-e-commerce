@@ -1,9 +1,8 @@
-import { instance, axiosClassic } from '@/api/axios';
+import { instance } from '@/api/axios';
 import { CreateOrderDTO } from '@/types/order.types';
 import axios from 'axios';
 
 interface OrderResponse {
-  // orderId: string;
   confirmation: {
     confirmation_url: string;
   };
@@ -16,55 +15,28 @@ interface ErrorResponse {
 }
 
 class OrderService {
-  async createOrder(data: CreateOrderDTO, isAuthenticated: boolean): Promise<OrderResponse> {
-    const axiosInstance = isAuthenticated ? instance : axiosClassic;
-    const endpoint = isAuthenticated ? '/payment/checkout' : '/orders';
+  async createOrder(data: CreateOrderDTO): Promise<OrderResponse> {
 
     try {
-      console.log('Creating order with data:', {
-        ...data,
-        items: data.items,
-      });
-
-      const response = await axiosInstance.post<OrderResponse>(endpoint, data);
-      console.log('Order creation response:', response.data);
-
-      if (!response.data.confirmation.confirmation_url) {
-        throw new Error('Invalid response from server');
-      }
-
+      const response = await instance.post<OrderResponse>('/payment/checkout', data);
       return response.data;
     } catch (error) {
-      console.error('Error in createOrder:', error);
-
       if (axios.isAxiosError(error)) {
         const errorData = error.response?.data as ErrorResponse;
 
-        console.error('Server error details:', {
-          status: error.response?.status,
-          data: errorData,
-          config: {
-            url: error.config?.url,
-            method: error.config?.method,
-            data: error.config?.data,
-          },
-        });
-
-        // Проверяем наличие сообщения об ошибке от сервера
         if (errorData?.message) {
           throw new Error(errorData.message);
         }
 
-        // Обрабатываем различные коды ошибок
         switch (error.response?.status) {
           case 400:
-            throw new Error('Invalid order data. Please check your cart items.');
+            throw new Error(`Invalid order data. Please check your cart items. ${error.message}`);
           case 401:
-            throw new Error('Authentication required. Please log in.');
+            throw new Error(`Authentication required. Please log in. ${error.message}`);
           case 404:
-            throw new Error('Products not found. They might have been removed from the store.');
+            throw new Error(`Products not found. They might have been removed from the store. ${error.message}`);
           case 500:
-            throw new Error('Server error. Please try again later.');
+            throw new Error(`Server error. Please try again later. ${error.message}`);
           default:
             throw new Error(`Order creation failed: ${error.message}`);
         }
@@ -72,6 +44,11 @@ class OrderService {
 
       throw new Error(`Failed to create order. Please try again: ${error}`);
     }
+  }
+
+  async getPaidOrders() {
+   const response = await instance.get('orders/mine')
+   return response
   }
 }
 

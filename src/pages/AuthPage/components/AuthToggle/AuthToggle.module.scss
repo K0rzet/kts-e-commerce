@@ -1,5 +1,10 @@
-@use '@/styles/variables.scss' as *;
+@use "@/styles/variables.scss" as *;
 
-.authToggleButton {
-  color: $text-white;
+/* Already have an account? Sign in */
+.authToggleLink {
+  width: 520px;
+  height: 48px;
+  color: $brand;
+  text-decoration: none;
+  margin-left: $space-xs;
 }

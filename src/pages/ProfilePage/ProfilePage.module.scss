@@ -9,6 +9,8 @@
   align-items: space-between;
   overflow-x: hidden;
   box-sizing: border-box;
+  margin-top: $space-xl;
+  gap: $space-xl;
 }
 
 .profileContent {
@@ -89,8 +91,6 @@
   overflow-x: hidden;
 
   .viewedProducts {
-    // max-width: 920px;
-    // width: 100%;
     display: flex;
     gap: $space-m;
     overflow-x: auto;
