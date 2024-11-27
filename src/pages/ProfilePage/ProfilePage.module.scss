@@ -1,4 +1,5 @@
 @use "@/styles/variables" as *;
+
 .profileWrapper {
   min-height: calc(100vh - 90px);
   display: flex;
@@ -6,11 +7,15 @@
   max-width: 1240px;
   width: 100%;
   margin: 0 auto;
-  align-items: space-between;
-  overflow-x: hidden;
   box-sizing: border-box;
   margin-top: $space-xl;
   gap: $space-xl;
+  padding: 0 $space-m;
+
+  overflow: hidden;
+  @media (max-width: 768px) {
+    padding: 0 $space-s;
+  }
 }
 
 .profileContent {
@@ -20,12 +25,23 @@
   @media (max-width: 768px) {
     flex-direction: column;
     align-items: center;
+    gap: $space-m;
   }
 
   .profileSections {
     display: flex;
     flex-direction: column;
     gap: $space-m;
+    width: 100%;
+
+    h2 {
+      font-size: 20px;
+      margin-bottom: $space-s;
+
+      @media (max-width: 768px) {
+        font-size: 18px;
+      }
+    }
   }
 
   .profileInfo {
@@ -42,17 +58,15 @@
     align-items: flex-start;
     gap: $space-m;
 
+    @media (max-width: 768px) {
+      // max-width: 100%;
+    }
+
     .logoutButton {
       background-color: $color-white;
       border: 1px solid $color-red;
       color: $text-primary;
 
-      .text {
-        color: $text-primary;
-        :hover {
-          background-color: $color-white;
-        }
-      }
       &:hover {
         background-color: $color-white !important;
         color: $color-red;
@@ -83,33 +97,40 @@
 .name {
   font-size: 24px;
   font-weight: 600;
+
+  @media (max-width: 768px) {
+    font-size: 20px;
+  }
 }
 
 .email {
   color: #666;
   font-size: 16px;
+
+  @media (max-width: 768px) {
+    font-size: 14px;
+  }
 }
 
 .viewedProductsContainer {
-  max-width: 920px;
   width: 100%;
+  overflow: hidden;
 
   .viewedProducts {
     display: flex;
     gap: $space-m;
-    overflow-x: scroll;
     scroll-snap-type: x mandatory;
     scroll-behavior: smooth;
     padding-bottom: $space-m;
-    overscroll-behavior-y: contain;
+    overscroll-behavior-x: contain;
     flex-wrap: nowrap;
+    overflow-x: scroll;
 
     scrollbar-width: thin;
     scrollbar-color: $brand transparent;
 
     &::-webkit-scrollbar {
       height: 6px;
-      width: 6px;
     }
 
     &::-webkit-scrollbar-track {
@@ -124,19 +145,22 @@
       &:hover {
         background: $brand-hover;
       }
-
-      &:active {
-        background: $brand-active;
-      }
     }
 
     & > * {
-      scroll-snap-align: start;
+      scroll-snap-align: center;
+      flex-shrink: 0;
     }
 
     .viewedCard {
-      max-width: 360px;
-      width: 100%;
+      max-width: 300px;
+      min-width: 240px;
+      flex: 1 0 auto;
+
+      @media (max-width: 768px) {
+        max-width: 200px;
+        min-width: 180px;
+      }
     }
   }
 }

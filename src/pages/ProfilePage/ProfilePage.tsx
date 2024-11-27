@@ -19,9 +19,11 @@ const ProfilePage = observer(() => {
   const scrollContainerRef = useRef<HTMLDivElement>(null);
   const { orders } = profileStore;
   const { setTitle } = useMeta();
+
   useEffect(() => {
     setTitle('Profile');
   }, [setTitle]);
+
   useHorizontalScroll(scrollContainerRef);
 
   const handleLogout = () => {
@@ -54,9 +56,10 @@ const ProfilePage = observer(() => {
             Logout
           </Button>
         </div>
+
         <div className={styles.profileSections}>
           {userStore.user && (
-            <div className="">
+            <div>
               <h2>Past Orders</h2>
               {orders.length > 0 ? (
                 orders.map((order) => (
@@ -71,11 +74,12 @@ const ProfilePage = observer(() => {
               )}
             </div>
           )}
+
           <h2>You watched</h2>
           <div className={styles.viewedProductsContainer}>
             <div className={styles.viewedProducts} ref={scrollContainerRef}>
               {viewedProductsStore.products.map((product) => (
-                <ProductCard key={product.id} {...product} productId={product.id} className={styles.viewedCard}/>
+                <ProductCard key={product.id} {...product} productId={product.id} className={styles.viewedCard} />
               ))}
             </div>
           </div>
