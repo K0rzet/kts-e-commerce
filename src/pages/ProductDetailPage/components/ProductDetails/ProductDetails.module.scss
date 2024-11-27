@@ -3,6 +3,10 @@
 .details {
   display: flex;
   flex-direction: column;
+
+  @media (max-width: 768px) {
+    align-items: center;
+  }
 }
 
 .title {
@@ -20,12 +24,19 @@
   font-size: 44px;
   color: $text-primary;
   margin-top: 80px;
+  @media (max-width: 768px) {
+    margin-top: $space-xl;
+  }
 }
 
 .actions {
   display: flex;
   gap: calc($space-xl * 2);
   margin-top: calc($space-xl * 2);
+  @media (max-width: 768px) {
+    margin-top: $space-xl;
+    gap: $space-xl;
+  }
 }
 
 .addToCartButton {

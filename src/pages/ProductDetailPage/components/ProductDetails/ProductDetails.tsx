@@ -24,7 +24,7 @@ export const ProductDetails = observer(({ store }: ProductDetailsProps) => {
         {product.description}
       </Text>
 
-      <Text view="p-20" weight="bold" className={styles.price}>
+      <Text weight="bold" className={styles.price}>
         ${product.price}
       </Text>
 

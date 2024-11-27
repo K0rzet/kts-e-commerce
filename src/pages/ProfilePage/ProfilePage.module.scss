@@ -17,6 +17,11 @@
   display: flex;
   gap: $space-l;
 
+  @media (max-width: 768px) {
+    flex-direction: column;
+    align-items: center;
+  }
+
   .profileSections {
     display: flex;
     flex-direction: column;
@@ -88,12 +93,11 @@
 .viewedProductsContainer {
   max-width: 920px;
   width: 100%;
-  overflow-x: hidden;
 
   .viewedProducts {
     display: flex;
     gap: $space-m;
-    overflow-x: auto;
+    overflow-x: scroll;
     scroll-snap-type: x mandatory;
     scroll-behavior: smooth;
     padding-bottom: $space-m;
@@ -128,6 +132,11 @@
 
     & > * {
       scroll-snap-align: start;
+    }
+
+    .viewedCard {
+      max-width: 360px;
+      width: 100%;
     }
   }
 }

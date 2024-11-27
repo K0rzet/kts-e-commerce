@@ -5,4 +5,10 @@
   background-color: $color-white;
   padding: $space-l 0;
   box-shadow: $header-shadow;
+  width: 100%;
+  margin: 0 auto;
+
+  @media (max-width: 768px) {
+    padding: $space-s 0;
+  }
 }

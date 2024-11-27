@@ -17,7 +17,8 @@
 
   &_view {
     &_title {
-      width: 336px;
+      max-width: 336px;
+      width: 100%;
       font-weight: 500;
       color: $text-primary;
       display: -webkit-box;

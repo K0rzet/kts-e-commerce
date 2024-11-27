@@ -9,15 +9,26 @@
 
   .menu {
     display: flex;
-    gap: calc($space-xl * 2);
     list-style: none;
+    justify-content: space-between;
     align-items: center;
+    white-space: nowrap;
+    max-width: 350px;
+    width: 100%;
+
+    & > li {
+      padding: 0 5px;
+    }
+
+    @media (max-width: 768px) {
+      display: none;
+    }
+
   }
 
   .menuIcons {
     display: flex;
     align-items: center;
-    gap: $space-xl;
 
     & > li {
       height: 100%;

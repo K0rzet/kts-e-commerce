@@ -32,6 +32,7 @@ const ProductDetailPage = observer(() => {
     }
   }, [productStore.product, viewedProductsStore]);
   useEffect(() => {
+    console.log('fetcched product')
     if (categoryId) {
       productStore.fetchRelatedItems(categoryId);
     }
@@ -83,7 +84,7 @@ const ProductDetailPage = observer(() => {
           <Text view="title" weight="bold" tag="h2" className={styles.relatedTitle}>
             Related Items
           </Text>
-          <div className={styles.relatedGrid}>
+          <div className={styles.related}>
             {relatedProducts.map((relatedProduct) => (
               <ProductCard
                 productId={relatedProduct.id}

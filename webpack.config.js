@@ -50,6 +50,7 @@ export default {
   output: {
     path: buildPath,
     filename: 'bundle.js',
+    publicPath: '/',
   },
   module: {
     rules: [

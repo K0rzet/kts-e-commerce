@@ -75,7 +75,7 @@ const ProfilePage = observer(() => {
           <div className={styles.viewedProductsContainer}>
             <div className={styles.viewedProducts} ref={scrollContainerRef}>
               {viewedProductsStore.products.map((product) => (
-                <ProductCard key={product.id} {...product} productId={product.id} />
+                <ProductCard key={product.id} {...product} productId={product.id} className={styles.viewedCard}/>
               ))}
             </div>
           </div>
