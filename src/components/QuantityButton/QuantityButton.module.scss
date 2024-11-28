@@ -4,9 +4,11 @@
   align-items: center;
   background-color: $button-primary-bg;
   display: inline-flex;
-  gap: 24px;
-  padding: 16px 32px;
+  gap: $space-xl;
+  padding: $space-s $space-m;
   position: relative;
+  color: $color-white;
+  box-sizing: border-box;
 }
 
 .img {
@@ -17,7 +19,6 @@
 }
 
 .element {
-  color: $button-primary-text;
   font-size: 18px;
   font-weight: 600;
   letter-spacing: 0;

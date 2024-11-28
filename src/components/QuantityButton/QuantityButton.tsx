@@ -1,9 +1,9 @@
 import React from 'react';
 import { observer } from 'mobx-react-lite';
 import * as styles from './QuantityButton.module.scss';
-import plusSvg from '@/assets/images/plus.svg'
-import minusSvg from '@/assets/images/minus.svg'
 import { useQuantityButton } from './useQuantityButton';
+import MinusIcon from '../icons/MinusIcon';
+import PlusIcon from '../icons/PlusIcon';
 
 interface QuantityButtonProps {
   productId: number;
@@ -14,19 +14,9 @@ const QuantityButton: React.FC<QuantityButtonProps> = observer(({ productId }) =
 
   return (
     <div className={styles.frame}>
-      <img 
-        className={styles.img} 
-        alt="Minus" 
-        src={minusSvg}
-        onClick={handleDecrease}
-      />
+      <MinusIcon onClick={handleDecrease} />
       <div className={styles.element}>{quantity}</div>
-      <img 
-        className={styles.img} 
-        alt="Plus" 
-        src={plusSvg}
-        onClick={handleIncrease}
-      />
+      <PlusIcon onClick={handleIncrease} />
     </div>
   );
 });

@@ -32,7 +32,7 @@ const ProductDetailPage = observer(() => {
     }
   }, [productStore.product, viewedProductsStore]);
   useEffect(() => {
-    console.log('fetcched product')
+    console.log('fetcched product');
     if (categoryId) {
       productStore.fetchRelatedItems(categoryId);
     }
@@ -64,7 +64,7 @@ const ProductDetailPage = observer(() => {
     );
   }
 
-  if (!productStore.product) {
+  if (!product) {
     return null;
   }
 

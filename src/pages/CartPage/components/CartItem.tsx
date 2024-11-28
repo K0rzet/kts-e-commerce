@@ -6,7 +6,8 @@ import { CartItem } from '@/types/cart.types';
 import Text from '@/components/Text';
 import QuantityButton from '@/components/QuantityButton';
 import CheckBox from '@/components/CheckBox';
-import trashSvg from '@/assets/images/trash.svg'
+import TrashIcon from '@/components/icons/TrashIcon';
+
 const CartItemComponent: React.FC<CartItem> = observer((props) => {
   const { cartStore } = useRootStore();
   const { product, quantity, selected } = props;
@@ -67,7 +68,7 @@ const CartItemComponent: React.FC<CartItem> = observer((props) => {
           className={styles.removeButton} 
           onClick={handleRemoveClick}
         >
-          <img src={trashSvg} alt="Remove" />
+          <TrashIcon />
         </button>
         <Text
           view="p-18"

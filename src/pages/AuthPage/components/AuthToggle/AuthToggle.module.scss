@@ -1,10 +1,16 @@
 @use "@/styles/variables.scss" as *;
 
-/* Already have an account? Sign in */
 .authToggleLink {
-  width: 520px;
-  height: 48px;
+  max-width: 520px;
   color: $brand;
   text-decoration: none;
   margin-left: $space-xs;
+}
+
+.authToggle {
+  display: flex;
+}
+
+.authToggleText {
+  display: flex;
 }

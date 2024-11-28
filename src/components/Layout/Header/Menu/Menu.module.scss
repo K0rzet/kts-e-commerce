@@ -7,6 +7,10 @@
   margin: 0 auto;
   justify-content: space-between;
 
+  svg {
+    color: var(--text-primary);
+  }
+
   .menu {
     display: flex;
     list-style: none;
@@ -23,15 +27,19 @@
     @media (max-width: 768px) {
       display: none;
     }
-
   }
 
   .menuIcons {
     display: flex;
     align-items: center;
-
+    gap: $space-m;
     & > li {
       height: 100%;
+    }
+    .themeSwitcher {
+      display: flex;
+      justify-content: center;
+      align-items: center;
     }
 
     .menuIconLink {
@@ -42,7 +50,7 @@
       align-items: center;
       box-sizing: border-box;
       text-decoration: none;
-      color: $text-primary;
+      color: var(--text-primary);
       transition: color 0.3s ease-in;
       font-size: 12px;
       &:active,
@@ -52,10 +60,17 @@
           color: $brand-hover;
         }
       }
+
+      @media (max-width: 768px) {
+        justify-content: center;
+        span {
+          display: none;
+        }
+      }
     }
 
     svg {
-      color: $text-primary;
+      color: var(--text-primary);
       transition: color 0.3s ease-in;
       &:active,
       &:hover {
@@ -65,6 +80,10 @@
 
     .active > svg {
       color: $brand-active;
+    }
+
+    @media (max-width: 768px) {
+      align-items: center;
     }
   }
 }

@@ -4,25 +4,29 @@ import * as styles from './AuthToggle.module.scss';
 import Text from '@/components/Text';
 export function AuthToggle({ isLogin }: { isLogin: boolean }) {
   return (
-    <div className="text-center text-base mt-3">
+    <div className={styles.authToggle}>
       {isLogin ? (
-        <p>
-          Don't have an account?
+        <div className={styles.authToggleText}>
+          <Text view="p-18" color="primary">
+            Don't have an account?
+          </Text>
           <Link className={styles.authToggleLink} to={'/register'}>
             <Text weight={'bold'} view="p-18">
               Register
             </Text>
           </Link>
-        </p>
+        </div>
       ) : (
-        <p>
-          Already have an account?{' '}
+        <div className={styles.authToggleText}>
+          <Text view="p-18" color="primary">
+            Already have an account?{' '}
+          </Text>
           <Link className={styles.authToggleLink} to={'/login'}>
             <Text weight={'bold'} view="p-18">
               Login
             </Text>
           </Link>
-        </p>
+        </div>
       )}
     </div>
   );

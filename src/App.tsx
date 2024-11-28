@@ -3,10 +3,10 @@ import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import ProductsPage from '@/pages/ProductsPage';
 import ProductDetailPage from '@/pages/ProductDetailPage';
 import './styles/globals.scss';
-import React from 'react';
+import React, { useEffect } from 'react';
 import Layout from '@/components/Layout';
 import CartPage from '@/pages/CartPage';
-import { RootStoreProvider } from '@/store/RootStoreContext';
+import { useRootStore } from '@/store/RootStoreContext';
 import AuthPage from './pages/AuthPage';
 import SocialAuthPage from './pages/SocialAuthPage';
 import RedirectIfAuth from './pages/RedirectIfAuth';
@@ -16,8 +16,12 @@ import ThanksPage from '@/pages/ThanksPage/ThanksPage';
 import { MetaProvider } from './context/MetaContext';
 
 function App() {
+  const { themeStore } = useRootStore();
+
+  useEffect(() => {
+    document.documentElement.setAttribute('data-theme', themeStore.theme);
+  }, [themeStore.theme]);
   return (
-    <RootStoreProvider>
       <BrowserRouter>
         <MetaProvider>
           <Layout>
@@ -38,7 +42,6 @@ function App() {
           </Layout>
         </MetaProvider>
       </BrowserRouter>
-    </RootStoreProvider>
   );
 }
 

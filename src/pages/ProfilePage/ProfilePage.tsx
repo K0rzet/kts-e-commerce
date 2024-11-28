@@ -11,6 +11,7 @@ import { useHorizontalScroll } from '@/hooks/useHorizontalScroll';
 import { useLocalStore } from '@/hooks/useLocalStore';
 import { ProfileStore } from '@/store/ProfileStore';
 import { useMeta } from '@/context/MetaContext';
+import { useAddToCart } from '@/hooks/useAddToCart';
 
 const ProfilePage = observer(() => {
   const { userStore, viewedProductsStore } = useRootStore();
@@ -19,7 +20,11 @@ const ProfilePage = observer(() => {
   const scrollContainerRef = useRef<HTMLDivElement>(null);
   const { orders } = profileStore;
   const { setTitle } = useMeta();
-
+  const { addedProducts, getAddToCartHandler } = useAddToCart(viewedProductsStore.products);
+  
+  const handleViewedProductClick = (productId: number) => {
+    return () => navigate(`/product/${productId}`);
+  };
   useEffect(() => {
     setTitle('Profile');
   }, [setTitle]);
@@ -60,7 +65,7 @@ const ProfilePage = observer(() => {
         <div className={styles.profileSections}>
           {userStore.user && (
             <div>
-              <h2>Past Orders</h2>
+              <Text tag="h2" view="title" weight="bold">Past Orders</Text>
               {orders.length > 0 ? (
                 orders.map((order) => (
                   <div key={order.id}>
@@ -75,11 +80,11 @@ const ProfilePage = observer(() => {
             </div>
           )}
 
-          <h2>You watched</h2>
+          <Text tag="h2" view="title" weight="bold">You watched</Text>
           <div className={styles.viewedProductsContainer}>
-            <div className={styles.viewedProducts} ref={scrollContainerRef}>
+            <div className={styles.viewedProducts} ref={scrollContainerRef} style={{ position: 'relative' }}>
               {viewedProductsStore.products.map((product) => (
-                <ProductCard key={product.id} {...product} productId={product.id} className={styles.viewedCard} />
+                <ProductCard key={product.id} {...product} productId={product.id} className={styles.viewedCard} onClick={handleViewedProductClick(product.id)} actionSlot={<Button onClick={getAddToCartHandler(product.id)}>{addedProducts[product.id] ? 'Added to Cart' : 'Add to Cart'}</Button>}/>
               ))}
             </div>
           </div>

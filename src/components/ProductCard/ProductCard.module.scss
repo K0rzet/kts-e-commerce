@@ -3,7 +3,7 @@
 .productCard {
   display: flex;
   flex-direction: column;
-  height: fit-content;
+  height: 602px;
   justify-content: space-between;
   align-items: flex-start;
   max-width: 360px;
@@ -61,6 +61,10 @@
 
 .action {
   align-self: flex-end;
+
+  button {
+    color: $text-white;
+  }
 }
 
 .contentText {

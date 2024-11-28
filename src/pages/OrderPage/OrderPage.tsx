@@ -2,8 +2,8 @@ import React, { useEffect } from 'react';
 import { observer } from 'mobx-react-lite';
 import Text from '@/components/Text';
 import * as styles from './OrderPage.module.scss';
-import OrderForm from '@/components/OrderForm';
 import { useMeta } from '@/context/MetaContext';
+import OrderForm from './components/OrderForm';
 
 const OrderPage: React.FC = observer(() => {
   const { setTitle } = useMeta();
@@ -20,4 +20,4 @@ const OrderPage: React.FC = observer(() => {
   );
 });
 
-export default OrderPage; 
+export default OrderPage;

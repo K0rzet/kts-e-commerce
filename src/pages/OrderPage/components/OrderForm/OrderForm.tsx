@@ -33,6 +33,7 @@ const OrderForm: React.FC = observer(() => {
   const handleNavigateToAuthPage = async () => {
     navigate('/login')
   }
+  
   const onSubmit = async (data: OrderFormData) => {
       if (cartStore.selectedItems.length === 0) {
         throw new Error('Please select items to order');
@@ -150,12 +151,12 @@ const OrderForm: React.FC = observer(() => {
 
         <div className={styles.summary}>
           <div className={styles.totalItems}>
-            <Text view="p-16">
+            <Text view="p-16" color="primary">
               Selected items: {cartStore.totalSelectedItems}
             </Text>
           </div>
           <div className={styles.totalPrice}>
-            <Text view="p-18" weight="bold">
+            <Text view="p-18" weight="bold" color="primary">
               Total: ${cartStore.totalSelectedPrice.toFixed(2)}
             </Text>
           </div>

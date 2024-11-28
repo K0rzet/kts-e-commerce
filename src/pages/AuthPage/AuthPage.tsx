@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react'
 import AuthForm from './components/AuthForm/AuthForm'
 import { useMeta } from '@/context/MetaContext';
+import * as styles from './AuthPage.module.scss';
 interface AuthPageProps {
   isLogin: boolean
 }
@@ -10,7 +11,7 @@ const AuthPage = ({ isLogin }: AuthPageProps) => {
     setTitle(isLogin ? 'Login' : 'Register');
   }, [isLogin, setTitle]); 
   return (
-    <div>
+    <div className={styles.authPage}>
         <AuthForm isLogin={isLogin} />
     </div>
   )

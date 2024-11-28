@@ -23,7 +23,7 @@ const AuthForm = ({ isLogin }: AuthFormProps) => {
       </Text>
       <div className={styles.inputGroup}>
         <label>
-          <Text view="p-18" weight="bold">
+          <Text view="p-18" weight="bold" color="primary">
             Email
           </Text>
           <Controller
@@ -37,7 +37,7 @@ const AuthForm = ({ isLogin }: AuthFormProps) => {
         </label>
 
         <label>
-          <Text view="p-18" weight="bold">
+          <Text view="p-18" weight="bold" color="primary">
             Password
           </Text>
           <Controller
@@ -50,17 +50,16 @@ const AuthForm = ({ isLogin }: AuthFormProps) => {
           />
         </label>
         <ReCAPTCHA ref={recaptchaRef} size="normal" sitekey={process.env.RECAPTCHA_SITE_KEY as string} theme="light" />
+        <Button className={styles.submitButton} type="submit" loading={isLoading} disabled={isLoading}>
+          {isLogin ? 'Login' : 'Register'}
+        </Button>
       </div>
-
-      <Button className={styles.submitButton} type="submit" loading={isLoading} disabled={isLoading}>
-        {isLogin ? 'Login' : 'Register'}
-      </Button>
-
-      <Text view="p-18" weight="bold" className={styles.socialMedia}>
-        Or you can continue with Google
-      </Text>
-      <SocialMediaButtons />
-
+      <div className={styles.socialMedia}>
+        <Text view="p-18" weight="bold" className={styles.socialMediaText}>
+          Or you can continue with Google
+        </Text>
+        <SocialMediaButtons />
+      </div>
       <AuthToggle isLogin={isLogin} />
     </form>
   );

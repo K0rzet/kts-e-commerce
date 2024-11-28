@@ -6,6 +6,7 @@ import { Link, useLocation } from 'react-router-dom';
 import Logo from '../components/Logo';
 import classNames from 'classnames';
 import { observer } from 'mobx-react-lite';
+import ThemeSwitcher from '../components/ThemeSwitcher/ThemeSwitcher';
 
 const Menu = observer(() => {
   const currentUrl = useLocation();
@@ -20,9 +21,18 @@ const Menu = observer(() => {
         ))}
       </ul>
       <ul className={styles.menuIcons}>
+        <li className={styles.themeSwitcher}>
+          <ThemeSwitcher />
+        </li>
         {menuIconsData.map((item) => (
           <li key={item.id}>
-            <Link to={item.path} className={classNames({ [styles.active]: currentUrl.pathname === item.path, [styles.menuIconLink]: true })}>
+            <Link
+              to={item.path}
+              className={classNames({
+                [styles.active]: currentUrl.pathname === item.path,
+                [styles.menuIconLink]: true,
+              })}
+            >
               {React.createElement(item.element)}
               <span>{item.description}</span>
             </Link>

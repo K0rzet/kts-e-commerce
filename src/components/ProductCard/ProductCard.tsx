@@ -71,6 +71,7 @@ const ProductCard: React.FC<CardProps> = React.memo(({
           <Text
             view="p-20"
             weight="bold"
+            color="primary"
             maxLines={2}
             tag="div"
           >

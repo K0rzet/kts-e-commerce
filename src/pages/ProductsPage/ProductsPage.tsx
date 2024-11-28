@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useMemo, useState } from 'react';
+import React, { useCallback, useEffect, useMemo } from 'react';
 import { observer } from 'mobx-react-lite';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import ProductCard from '@/components/ProductCard';
@@ -15,19 +15,18 @@ import { CategoryStore } from '@/store/CategoryStore';
 import { useLocalStore } from '@/hooks/useLocalStore';
 import SearchInput from './components/SearchInput';
 import Titles from './components/Titles';
-import { useRootStore } from '@/store/RootStoreContext';
 import { useMeta } from '@/context/MetaContext';
+import { useAddToCart } from '@/hooks/useAddToCart';
 
 
 const ProductsPage: React.FC = observer(() => {
   const categoryStore = useLocalStore(() => new CategoryStore());
-  const { cartStore } = useRootStore();
   const navigate = useNavigate();
   const [searchParams, setSearchParams] = useSearchParams();
   const { products, isLoading, totalCount, currentPage, PAGE_LIMIT } = useProducts();
   const { categories } = categoryStore;
-  const [addedProducts, setAddedProducts] = useState<Record<number, boolean>>({});
   const { setTitle } = useMeta();
+  const { addedProducts, getAddToCartHandler } = useAddToCart(products);
   useEffect(() => {
     setTitle('Products');
   }, [setTitle]);
@@ -76,26 +75,6 @@ const ProductsPage: React.FC = observer(() => {
       });
     },
     [setSearchParams],
-  );
-
-  const handleAddToCart = useCallback((id: number, event: React.MouseEvent) => {
-    event.preventDefault();
-    event.stopPropagation();
-    const product = products.find(p => p.id === id);
-    if (product) {
-      cartStore.addToCart(product);
-      setAddedProducts(prev => ({ ...prev, [id]: true }));
-      setTimeout(() => {
-        setAddedProducts(prev => ({ ...prev, [id]: false }));
-      }, 1000);
-    }
-  }, [products, cartStore]);
-
-  const getAddToCartHandler = useCallback(
-    (productId: number) => {
-      return (event: React.MouseEvent) => handleAddToCart(productId, event);
-    },
-    [handleAddToCart],
   );
 
   return (
