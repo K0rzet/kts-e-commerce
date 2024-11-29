@@ -1,6 +1,6 @@
 import React from 'react';
 import * as styles from './Menu.module.scss';
-import { menuData, getMenuIconsData } from './menu.data';
+import { getMenuIconsData } from './menu.data';
 import MenuItem from './MenuItem';
 import { Link, useLocation } from 'react-router-dom';
 import Logo from '../components/Logo';
@@ -15,11 +15,6 @@ const Menu = observer(() => {
   return (
     <div className={styles.menuContainer}>
       <Logo />
-      <ul className={styles.menu}>
-        {menuData.map((item) => (
-          <MenuItem key={item.id} title={item.title} path={item.path} isActive={currentUrl.pathname === item.path} />
-        ))}
-      </ul>
       <ul className={styles.menuIcons}>
         <li className={styles.themeSwitcher}>
           <ThemeSwitcher />
