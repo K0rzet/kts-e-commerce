@@ -1,14 +1,14 @@
-@use "../../styles/variables.scss" as *;
+@use "@/styles/variables.scss" as *;
 
 .text {
   margin: 0;
   padding: 0;
   font-style: normal;
-  word-break: break-all;
-  
+
   &_tag {
     &_h2 {
       font-size: 32px;
+      line-height: 36px;
     }
     &_h1 {
       font-size: 44px;
@@ -17,10 +17,10 @@
 
   &_view {
     &_title {
-      width: 336px;
+      max-width: 336px;
+      width: 100%;
       font-weight: 500;
-      line-height: 24px;
-      color: $text-primary;
+      color: var(--text-primary);
       display: -webkit-box;
       -webkit-box-orient: vertical;
       overflow: hidden;
@@ -61,6 +61,9 @@
     &_medium {
       font-weight: 500;
     }
+    &_semiBold {
+      font-weight: 600;
+    }
 
     &_bold {
       font-weight: 700;
@@ -69,7 +72,7 @@
 
   &_color {
     &_primary {
-      color: $text-primary;
+      color: var(--text-primary);
     }
 
     &_white {

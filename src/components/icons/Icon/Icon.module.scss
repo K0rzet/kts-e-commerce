@@ -1,25 +1,25 @@
-@use '../../styles/variables.scss' as *;
+@use "@/styles/variables.scss" as *;
 
 .icon {
-    display: inline-block;
-    flex-shrink: 0;
-    color: currentColor;
+  display: inline-block;
+  flex-shrink: 0;
+  color: currentColor;
 
-    &_color {
-        &_primary {
-            color: $text-primary;
-        }
-
-        &_secondary {
-            color: $text-secondary;
-        }
-
-        &_accent {
-            color: $text-accent;
-        }
+  &_color {
+    &_primary {
+      color: var(--text-primary);
     }
 
-    &_blur {
-        filter: blur(2px);
+    &_secondary {
+      color: $text-secondary;
     }
+
+    &_accent {
+      color: $text-accent;
+    }
+  }
+
+  &_blur {
+    filter: blur(2px);
+  }
 }

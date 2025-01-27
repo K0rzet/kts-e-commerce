@@ -1,0 +1,14 @@
+@use '@/styles/variables' as *;
+.searchContainer {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  gap: $space-xl;
+} 
+.searchButton {
+  color: $text-white;
+}
+
+.searchInput {
+  width: 100%;
+}

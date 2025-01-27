@@ -1,8 +1,12 @@
-@use "../../../../styles/variables.scss" as *;
+@use "@/styles/variables.scss" as *;
 
 .details {
   display: flex;
   flex-direction: column;
+
+  @media (max-width: 768px) {
+    align-items: center;
+  }
 }
 
 .title {
@@ -18,21 +22,33 @@
 
 .price {
   font-size: 44px;
-  color: $text-primary;
+  color: var(--text-primary);
   margin-top: 80px;
+  @media (max-width: 768px) {
+    margin-top: $space-xl;
+  }
 }
 
 .actions {
   display: flex;
   gap: calc($space-xl * 2);
   margin-top: calc($space-xl * 2);
+  color: $text-white;
+  @media (max-width: 768px) {
+    margin-top: $space-xl;
+    gap: $space-xl;
+  }
 }
 
 .addToCartButton {
-  background: $text-white;
+  background: transparent;
   border: 1px solid $text-secondary;
 
   > span {
-    color: $text-primary;
+    color: var(--text-primary);
   }
+}
+
+.buyNowButton {
+  color: $text-white;
 }

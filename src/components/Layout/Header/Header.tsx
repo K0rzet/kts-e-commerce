@@ -1,9 +1,12 @@
-import React from "react"
-
+import React from 'react';
+import Menu from './Menu';
+import * as styles from './Header.module.scss';
 const Header: React.FC = () => {
   return (
-    <div>Header</div>
-  )
-}
+    <div className={styles.header}>
+      <Menu />
+    </div>
+  );
+};
 
-export default Header
+export default Header;

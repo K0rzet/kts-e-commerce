@@ -1,0 +1,14 @@
+@use "@/styles/variables.scss" as *;
+
+.header {
+  box-sizing: border-box;
+  background-color: var(--color-white);
+  padding: $space-l $space-s;
+  box-shadow: $header-shadow;
+  width: 100%;
+  margin: 0 auto;
+
+  @media (max-width: 768px) {
+    padding: $space-s $space-xs;
+  }
+}

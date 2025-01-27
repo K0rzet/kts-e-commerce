@@ -1,0 +1,29 @@
+@use '@/styles/variables.scss' as *;
+
+.frame {
+  align-items: center;
+  background-color: $button-primary-bg;
+  display: inline-flex;
+  gap: $space-xl;
+  padding: $space-s $space-m;
+  position: relative;
+  color: $color-white;
+  box-sizing: border-box;
+}
+
+.img {
+  height: 24px;
+  position: relative;
+  width: 24px;
+  cursor: pointer;
+}
+
+.element {
+  font-size: 18px;
+  font-weight: 600;
+  letter-spacing: 0;
+  line-height: 18px;
+  position: relative;
+  white-space: nowrap;
+  width: fit-content;
+} 

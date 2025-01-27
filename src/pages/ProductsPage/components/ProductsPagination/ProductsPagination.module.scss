@@ -1,4 +1,4 @@
-@use '../../../../styles/variables.scss' as *;
+@use '@/styles/variables.scss' as *;
 
 .pagination {
   display: flex;
@@ -23,7 +23,7 @@
   font-size: 18px;
   font-weight: 500;
   line-height: 180%;
-  color: $text-primary;
+  color: var(--text-primary);
   background: transparent;
   border: 1.5px solid $text-secondary;
   cursor: pointer;
@@ -50,7 +50,7 @@
 
     &:hover {
       border: none;
-      color: $text-primary;
+      color: var(--text-primary);
     }
   }
 
@@ -66,6 +66,7 @@
   border: 1.5px solid $text-secondary;
   cursor: pointer;
   transition: all 0.2s ease-in-out;
+  color: var(--text-primary);
 
   &:hover:not(:disabled) {
     border-color: $brand;

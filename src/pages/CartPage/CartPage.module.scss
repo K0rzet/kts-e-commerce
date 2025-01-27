@@ -1,0 +1,130 @@
+@use "@/styles/variables.scss" as *;
+
+.cartWrapper {
+  padding: $space-xl;
+  max-width: 1240px;
+  margin: 0 auto;
+  min-height: calc(100vh - 80px);
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  box-sizing: border-box;
+
+
+  .cartContent {
+    display: flex;
+    gap: $space-xl;
+    justify-content: space-between;
+    width: 100%;
+  }
+}
+
+.empty {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: calc(100vh - 80px);
+  text-align: center;
+  flex-direction: column;
+  gap: $space-xl;
+}
+
+.products {
+  display: flex;
+  flex-direction: column;
+  gap: $space-xl;
+  width: 100%;
+
+}
+
+.cartButton {
+  color: $text-white;
+}
+
+.actions {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+
+  input[type="number"] {
+    width: 60px;
+    height: 36px;
+    padding: 0 8px;
+    border: 1px solid #e0e0e0;
+    border-radius: 4px;
+    text-align: center;
+    
+    &::-webkit-inner-spin-button,
+    &::-webkit-outer-spin-button {
+      opacity: 1;
+      height: 36px;
+    }
+  }
+}
+
+.total {
+  display: flex;
+  max-width: 300px;
+  width: 100%;
+  padding: $space-xl;
+  box-sizing: border-box;
+  background: var(--color-white);
+  height: fit-content;
+  flex-direction: column;
+  gap: $space-xs;
+  .totalPrice {
+    display: flex;
+    justify-content: space-between;
+    color: var(--text-primary);
+  }
+
+  @media (max-width: 768px) {
+    max-width: 100%;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: $space-m;
+  }
+}
+
+.productsCount {
+  margin-left: 8px;
+  color: $text-secondary;
+}
+
+@media (max-width: 768px) {
+  .cartWrapper {
+    padding: 16px;
+  }
+
+  .products {
+    grid-template-columns: 1fr;
+  }
+
+  .actions {
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+}
+
+.cartHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid $input-border;
+  box-sizing: border-box;
+  width: 100%;
+
+  @media (max-width: 576px) {
+    flex-direction: column-reverse;
+    align-items: flex-start;
+    gap: $space-xs;
+  }
+}
+
+.selectAll {
+  display: flex;
+  align-items: center;
+  gap: $space-m;
+}

@@ -1,0 +1,61 @@
+@use "@/styles/variables.scss" as *;
+.form {
+  max-width: 500px;
+  margin: 0 auto;
+  padding: 20px;
+}
+.visible {
+  display: block;
+}
+.formGroup {
+  margin-bottom: 20px;
+
+  .errorText {
+    color: var(--error-color);
+    margin: 4px 0;
+    font-size: 12px;
+  }
+}
+.confirmButton {
+  color: $text-white;
+}
+.unauthUser {
+  max-width: 400px;
+  width: 100%;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: $space-m;
+  > button {
+    color: white;
+  }
+}
+.summary {
+  margin: 20px 0;
+  padding: 15px;
+  background-color: var(--color-white);
+  border-radius: 8px;
+
+  .totalItems {
+    margin-bottom: 10px;
+    font-weight: bold;
+  }
+
+  .totalPrice {
+    font-size: 1.2em;
+    font-weight: bold;
+    color: var(--brand-color);
+  }
+}
+
+.error {
+  margin: 16px 0;
+  padding: 12px;
+  border-radius: 4px;
+  background-color: var(--error-light);
+
+  .errorText {
+    color: var(--error-color);
+  }
+}
+

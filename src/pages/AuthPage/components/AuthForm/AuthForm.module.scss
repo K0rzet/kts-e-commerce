@@ -1,0 +1,99 @@
+@use "@/styles/variables.scss" as *;
+
+.authButton {
+  width: 100%;
+  color: $text-white;
+}
+
+.authForm {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: $space-xl 0 $space-xl 0;
+  gap: $space-xl;
+  max-width: 520px;
+  width: 100%;
+  margin: 100px auto;
+  border: 2px solid $brand;
+  box-sizing: border-box;
+
+  @media (max-width: 576px) {
+    margin-top: $space-xl;
+  }
+
+  .title {
+    max-width: 520px;
+    text-align: center;
+    color: var(--text-primary);
+  }
+
+  .inputGroup {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: $space-l;
+    gap: $space-m;
+    border-top: 2px solid $brand;
+    border-bottom: 2px solid $brand;
+    box-sizing: border-box;
+    @media (max-width: 576px) {
+      padding: $space-xxs;
+    }
+
+    label {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0;
+      gap: 12px;
+      width: 100%;
+
+      span {
+        max-width: 120px;
+        width: 100%;
+        font-size: 20px;
+        color: var(--text-primary);
+      }
+
+      input {
+        box-sizing: border-box;
+        display: flex;
+        align-items: center;
+        padding: 16px 12px;
+        gap: 8px;
+        max-width: 200px;
+        width: 100%;
+        border: 1px solid $input-border;
+      }
+    }
+  }
+
+  .submitButton {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 16px 32px;
+    width: 300px;
+    background: $button-primary-bg;
+    border-radius: 0;
+    color: $button-primary-text;
+    font-size: 18px;
+  }
+
+  .socialMedia {
+    display: flex;
+    flex-direction: column;
+    gap: $space-m;
+  }
+
+  .socialMediaText {
+    margin: 0 auto;
+    color: $brand;
+  }
+
+  .signInPrompt {
+    width: 520px;
+    text-align: center;
+    color: var(--text-primary);
+  }
+}

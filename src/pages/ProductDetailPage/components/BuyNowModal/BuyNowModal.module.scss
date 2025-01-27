@@ -1,0 +1,145 @@
+@use '@/styles/variables.scss' as *;
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.modal {
+  background-color: var(--app-bg);
+  color: var(--text-primary);
+  border-radius: 8px;
+  box-shadow: var(--shadow);
+  width: 90%;
+  max-width: 500px;
+  padding: 20px;
+  position: relative;
+
+  @media (max-width: 768px) {
+    padding: 15px;
+    width: 95%;
+  }
+}
+
+.closeButton {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: none;
+  border: none;
+  font-size: 24px;
+  cursor: pointer;
+  color: var(--text-secondary);
+
+  &:hover {
+    color: var(--text-primary);
+  }
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.title {
+  font-size: 24px;
+  font-weight: bold;
+  color: var(--text-primary);
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.productDetails {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  margin-bottom: 20px;
+}
+
+.price {
+  font-weight: bold;
+  color: var(--text-primary);
+}
+
+@media (max-width: 768px) {
+  .productDetails {
+    flex-direction: column;
+    align-items: center;
+  }
+}
+
+
+
+.form {
+  max-width: 500px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.visible {
+  display: block;
+}
+
+.formGroup {
+  margin-bottom: 20px;
+}
+
+.errorText {
+  color: var(--error-color);
+  margin: 4px 0;
+  font-size: 12px;
+}
+
+.confirmButton {
+  color: $text-white;
+}
+
+.unauthUser {
+  max-width: 400px;
+  width: 100%;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: $space-m;
+  
+  > button {
+    color: white;
+  }
+}
+
+.summary {
+  margin: 20px 0;
+  padding: 15px;
+  background-color: var(--color-white);
+  border-radius: 8px;
+}
+
+.totalItems {
+  margin-bottom: 10px;
+  font-weight: bold;
+}
+
+.totalPrice {
+  font-size: 1.2em;
+  font-weight: bold;
+  color: var(--brand-color);
+}
+
+.error {
+  margin: 16px 0;
+  padding: 12px;
+  border-radius: 4px;
+  background-color: var(--error-light);
+}
+
+.errorText {
+  color: var(--error-color);
+}

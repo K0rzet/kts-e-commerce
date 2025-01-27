@@ -1,0 +1,38 @@
+@use "@/styles/variables.scss" as *;
+
+.menuItem {
+  text-decoration: none;
+  position: relative;
+  & > * {
+    transition: color 0.3s ease-in-out;
+    &:active,
+    &:hover {
+      color: $brand-hover;
+    }
+  }
+
+  &.isActive {
+    &::after {
+      content: "";
+      display: block;
+      width: 0;
+      height: 3px;
+      position: absolute;
+      background-color: $brand;
+      bottom: calc(-#{$space-xl} - 11px);
+      left: 0;
+      z-index: 10;
+      transition: width 0.3s ease-in-out;
+      animation: underline 0.3s ease-in-out forwards;
+    }
+  }
+}
+
+@keyframes underline {
+  from {
+    width: 0;
+  }
+  to {
+    width: 100%;
+  }
+}

@@ -1,0 +1,141 @@
+@use "@/styles/variables.scss" as *;
+
+.cartItem {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: $space-xl;
+  max-width: 860px;
+  width: 100%;
+  height: 248px;
+  box-sizing: border-box;
+  @media (max-width: 576px) {
+    height: fit-content;
+    justify-content: flex-start;
+  }
+}
+.cartContainer {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  padding: $space-xl;
+  background: var(--color-white);
+  width: 100%;
+
+  @media (max-width: 576px) {
+    flex-direction: column;
+    width: fit-content;
+    gap: $space-xs;
+    padding: $space-xs;
+    height: 280px;
+  }
+}
+.content {
+  display: flex;
+  align-items: flex-start;
+  padding: 0;
+  gap: $space-xl;
+  max-width: 608px;
+  /* width: 100%; */
+  height: 200px;
+  @media (max-width: 576px) {
+    flex-direction: column;
+    gap: $space-xs;
+  }
+}
+
+.imageWrapper {
+  max-width: 200px;
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  background: $product-card-image-bg;
+
+  @media (max-width: 576px) {
+    width: 80px;
+    height: 80px;
+  }
+
+  .image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+
+    @media (max-width: 768px) {
+      width: 80px;
+      height: 80px;
+    }
+  }
+}
+
+.body {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: $space-xl;
+  max-width: 360px;
+  /* width: 100%; */
+  height: 190px;
+
+  @media (max-width: 576px) {
+    gap: $space-xs;
+  }
+
+  .header {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    padding: 0;
+    gap: $space-xxs;
+    max-width: 336px;
+    /* width: 100%; */
+    height: 48px;
+    color: var(--text-primary);
+  }
+
+  .priceWrapper {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding: 0;
+    gap: $space-xxs;
+    max-width: 336px;
+    /* width: 100%; */
+    height: 22px;
+    color: var(--text-primary);
+  }
+}
+
+.actions {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  padding: 0;
+  gap: $space-xs;
+  width: 148px;
+  height: 58px;
+  @media (max-width: 576px) {
+    flex-direction: row;
+    height: fit-content;
+  }
+
+  .removeButton {
+    width: 24px;
+    height: 24px;
+    background: none;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+    transition: opacity 0.2s ease;
+    color: var(--text-primary);
+
+    &:hover {
+      opacity: 0.7;
+    }
+
+    img {
+      width: 100%;
+      height: 100%;
+    }
+  }
+}

@@ -1,7 +1,6 @@
-@use '../../styles/variables.scss' as *;
+@use '@/styles/variables.scss' as *;
 
 .button {
-  box-sizing: border-box;
   display: inline-flex;
   flex-direction: row;
   justify-content: center;
@@ -10,13 +9,13 @@
   gap: $space-xxs;
   background: $button-primary-bg;
   height: 52px;
-
+  min-width: 137px;
   border: none;
   border-radius: 0;
-
+  
   cursor: pointer;
-  width: auto;
   white-space: nowrap;
+  box-sizing: border-box;
 
   &:not(.loading) {
     &:hover:not(:disabled) {
@@ -51,5 +50,5 @@
   align-items: center;
   font-size: 18px;
   line-height: 18px;
-  color: $button-primary-text;
+  color: inherit;
 }

@@ -13,7 +13,7 @@ export class ProductsStore implements ILocalStore {
   private _meta: Meta = Meta.initial;
   private _totalCount: number = 0;
   private _isInitialized: boolean = false;
-  private _lastUsedCategoryId: number | undefined = undefined;
+  private _lastUsedCategoryId: number | null = null;
 
   constructor() {
     makeObservable<ProductsStore, PrivateFields>(this, {
@@ -46,28 +46,17 @@ export class ProductsStore implements ILocalStore {
       this._meta = Meta.loading;
       
       const productsResponse = await productsService.getProducts({limit, offset, title, categoryId});
-
-      const shouldUpdateTotalCount = !this._isInitialized || 
-        title !== undefined || 
-        categoryId !== undefined || 
-        (this._lastUsedCategoryId !== undefined && categoryId === undefined);
-
-      if (shouldUpdateTotalCount) {
-        const totalCountResponse = await productsService.getProducts({
-          title,
-          categoryId
-        });
-        runInAction(() => {
-          this._totalCount = totalCountResponse.data.length;
-          this._isInitialized = true;
-          this._lastUsedCategoryId = categoryId;
-        });
-      }
+      
+      runInAction(() => {
+        this._totalCount = productsResponse.data.total;
+        this._isInitialized = true;
+        this._lastUsedCategoryId = categoryId ?? null;
+      });
 
       runInAction(() => {
         this._products = {
-          order: productsResponse.data.map(product => product.id),
-          entities: productsResponse.data.reduce((acc, product) => {
+          order: productsResponse.data.products.map(product => product.id),
+          entities: productsResponse.data.products.reduce((acc, product) => {
             acc[product.id] = product;
             return acc;
           }, {} as Record<number, IProduct>)
@@ -86,7 +75,7 @@ export class ProductsStore implements ILocalStore {
     this._products = getInitialCollectionModel();
     this._totalCount = 0;
     this._isInitialized = false;
-    this._lastUsedCategoryId = undefined;
+    this._lastUsedCategoryId = null;
     this._meta = Meta.initial;
   }
 }

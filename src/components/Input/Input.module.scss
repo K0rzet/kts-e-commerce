@@ -1,4 +1,4 @@
-@use '../../styles/variables' as *;
+@use '@/styles/variables' as *;
 
 .container {
   display: flex;
@@ -8,7 +8,7 @@
   background-color: $input-bg;
   border: 1px solid $input-border;
   height: 52px;
-  width: 100%;
+  /* width: 100%; */
   box-sizing: border-box;
   border-radius: 4px;
 
@@ -30,7 +30,7 @@
   outline: none;
   font-size: 16px;
   line-height: 20px;
-  color: $text-primary;
+  color: var(--text-primary);
   width: 100%;
 
   &::placeholder {
